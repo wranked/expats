@@ -8,7 +8,7 @@ authors = ["Gustavo Tempel <gtempel@hotmail.com>"]
 python = "^3.9"
 Django = "4"
 python-dotenv = "^1.0.1"
-psycopg2 = "^2.9.9"
+psycopg2-binary = "^2.9.9"
 
 [tool.poetry.dev-dependencies]
 
