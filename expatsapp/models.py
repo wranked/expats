@@ -21,13 +21,16 @@ class CategoryTypes(models.TextChoices):
 
 
 class User(BaseModel):
-    email = models.EmailField(max_length=100)
+    email = models.EmailField(unique=True)
     password = models.CharField(max_length=256)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     username = models.CharField(max_length=100, null=True, blank=True)
     birth_date = models.CharField(max_length=100, null=True, blank=True)
     validated_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return self.email
 
 
 class Company(BaseModel):
@@ -42,24 +45,24 @@ class Company(BaseModel):
         verbose_name_plural = "Companies"
 
     @property
-    def ratings(self):
+    def rating_summary(self):
         return {
-            1: 1,
-            2: None,
-            3: None,
-            4: None,
-            5: 9,
-            "total": 10,
-            "media": 4.6,
+            1: 2,
+            2: 0,
+            3: 3,
+            4: 5,
+            5: 10,
+            "total": 20,
+            "media": 4.05,
         }
 
 
 class Review(BaseModel):
     # company_name = models.CharField(max_length=100, null=True, blank=True)
-    rating = models.FloatField()
+    rating = models.IntegerField()
     comment = models.CharField(max_length=1000)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    worker = models.ForeignKey(User, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="reviews")
+    worker = models.ForeignKey(User, on_delete=models.CASCADE, related_name="workers")
     start_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
 

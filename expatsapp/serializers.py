@@ -9,13 +9,26 @@ class UserSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class CompanySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Company
-        fields = "__all__"
-
-
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = "__all__"
+        fields = [
+            "rating",
+            "comment",
+        ]
+
+
+class CompanySerializer(serializers.ModelSerializer):
+    reviews = ReviewSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Company
+        fields = [
+            "name",
+            "legal_name",
+            "description",
+            "category",
+            "location",
+            "rating_summary",
+            "reviews",
+        ]
