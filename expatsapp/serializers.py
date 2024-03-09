@@ -6,7 +6,16 @@ from expatsapp.models import Company, Review
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = "__all__"
+        fields = [
+            "id",
+            "created_at",
+            "modified_at",
+            "rating",
+            "comment",
+            "start_date",
+            "end_date",
+            "company",
+        ]
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -20,7 +29,7 @@ class CompanySerializer(serializers.ModelSerializer):
             "legal_name",
             "description",
             "category",
-            "location",
+            # "location",
             "rating_summary",
             "reviews",
         ]
