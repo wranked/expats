@@ -18,9 +18,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
-from rest_framework import routers
 
-from expatsapp.routers import router
+from expatsapp.routers import router, company_router
+from expatsapp.views import ReviewViewSet
 # from users.routers import user_router
 from users.views import UserLogin, UserLogout, UserRegister, UserView
 
@@ -28,6 +28,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', include(router.urls)),
+    path('', include(company_router.urls)),
 
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 

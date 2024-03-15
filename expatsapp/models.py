@@ -1,6 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils.text import slugify
+
 
 from users.models import CustomUser
 
@@ -23,21 +26,12 @@ class CategoryTypes(models.TextChoices):
     OTHER = "Other"
 
 
-# class User(BaseModel):
-#     email = models.EmailField(unique=True)
-#     password = models.CharField(max_length=256)
-#     first_name = models.CharField(max_length=100)
-#     last_name = models.CharField(max_length=100)
-#     username = models.CharField(max_length=100, null=True, blank=True)
-#     birth_date = models.CharField(max_length=100, null=True, blank=True)
-#     validated_at = models.DateTimeField(null=True, blank=True)
-#
-#     def __str__(self):
-#         return self.email
-
-
 class Company(BaseModel):
-    name = models.CharField(max_length=100)
+
+    name_validator = UnicodeUsernameValidator()
+
+    display_name = models.CharField(max_length=100, null=True, blank=True)
+    id_name = models.CharField(max_length=100, unique=True, validators=[name_validator], null=True)
     legal_name = models.CharField(max_length=100, null=True, blank=True)
     description = models.CharField(max_length=1000, null=True, blank=True)
     category = models.CharField(max_length=50, choices=CategoryTypes.choices)
@@ -45,6 +39,10 @@ class Company(BaseModel):
 
     class Meta:
         verbose_name_plural = "Companies"
+
+    def save(self, *args, **kwargs):
+        self.id_name = slugify(self.display_name)
+        super(Company, self).save(*args, **kwargs)
 
     @property
     def rating_summary(self):
@@ -55,11 +53,11 @@ class Company(BaseModel):
             3: 0,
             4: 0,
             5: 0,
-            "total": self.reviews.count(),  # TODO: change key to "count"
+            "count": self.reviews.count(),
             "media": None,
         }
         total = 0
-        for review in reviews.iterator():
+        for review in reviews.all():
             total += review.rating
             result[review.rating] += 1
         if self.reviews.count():
@@ -67,14 +65,14 @@ class Company(BaseModel):
         return result
 
     def __str__(self):
-        return self.name
+        return self.display_name
 
 
 class Review(BaseModel):
     # company_name = models.CharField(max_length=100, null=True, blank=True)
     rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
-    salary_range = models.IntegerField()
-    salary_currency = models.CharField(max_length=50)
+    salary_range = models.IntegerField(null=True, blank=True)
+    salary_currency = models.CharField(max_length=50, null=True, blank=True)
     comment = models.CharField(max_length=1000)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="reviews")
     worker = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="reviews")
@@ -86,7 +84,7 @@ class Review(BaseModel):
     #         raise ValidationError("Company name AND Company not allowed")
 
     def __str__(self):
-        return " - ".join([self.company.name, (self.worker.display_name or "Anonymous")])
+        return " - ".join([self.company.display_name, (self.worker.display_name or "Anonymous")])
 
 
 class BusinessRegionTypes(models.TextChoices):
@@ -152,4 +150,4 @@ class Location(BaseModel):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="locations")
 
     def __str__(self):
-        return " - ".join([self.company.name, self.name])
+        return " - ".join([self.company.display_name, self.name])

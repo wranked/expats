@@ -1,9 +1,11 @@
-from rest_framework import routers
+from rest_framework_nested import routers
 
-from expatsapp import views
+from expatsapp.views import CompanyReviewViewSet, CompanyViewSet, ReviewViewSet
 
 
-router = routers.DefaultRouter()
-# router.register(r'users', views.UserViewSet)
-router.register(r'companies', views.CompanyViewSet)
-router.register(r'reviews', views.ReviewViewSet)
+router = routers.SimpleRouter()
+router.register(r'companies', CompanyViewSet)
+router.register(r'reviews', ReviewViewSet)
+
+company_router = routers.NestedSimpleRouter(router, r'companies', lookup='company')
+company_router.register(r'reviews', CompanyReviewViewSet, basename='company-reviews')

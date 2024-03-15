@@ -70,6 +70,18 @@ django = ">=3.0"
 pytz = "*"
 
 [[package]]
+name = "drf-nested-routers"
+version = "0.93.5"
+description = "Nested resources for the Django Rest Framework"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+Django = ">=3.2"
+djangorestframework = ">=3.14.0"
+
+[[package]]
 name = "drf-spectacular"
 version = "0.27.1"
 description = "Sane and flexible OpenAPI 3 schema generation for Django REST framework"
@@ -222,7 +234,7 @@ python-versions = ">=3.6"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "387fb33c3251765b80d484de89cc42d9bf33998553e15cc85118ac32d822cb01"
+content-hash = "5c9a44440ce1213e4c2f2aa988c0a743bdc50ad6239bf64adc1cdc5809dbc889"
 
 [metadata.files]
 asgiref = []
@@ -230,6 +242,7 @@ attrs = []
 django = []
 django-cors-headers = []
 djangorestframework = []
+drf-nested-routers = []
 drf-spectacular = []
 inflection = []
 jsonschema = []
