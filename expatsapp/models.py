@@ -68,23 +68,84 @@ class Company(BaseModel):
         return self.display_name
 
 
+class SalaryFrequencyTypes(models.TextChoices):
+    HOURLY = "Hourly"
+    DAILY = "Daily"
+    WEEKLY = "Weekly"
+    MONTHLY = "Monthly"
+    ANNUALLY = "Annually"
+
+
+class SalaryCurrencyTypes(models.TextChoices):
+    USD = "USD"
+    EUR = "EUR"
+
+
 class Review(BaseModel):
     # company_name = models.CharField(max_length=100, null=True, blank=True)
     rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     salary_range = models.IntegerField(null=True, blank=True)
-    salary_currency = models.CharField(max_length=50, null=True, blank=True)
+    salary_currency = models.CharField(max_length=50, choices=SalaryCurrencyTypes.choices, default=SalaryCurrencyTypes.USD)
+    salary_frequency = models.CharField(max_length=50, choices=SalaryFrequencyTypes.choices, default=SalaryFrequencyTypes.MONTHLY)
     comment = models.CharField(max_length=1000)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="reviews")
-    worker = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="reviews")
     start_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
+    is_anonymous = models.BooleanField(default=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="reviews")
+    reviewer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="reviews")
 
     # def clean(self):
     #     if self.company_name and self.company:
     #         raise ValidationError("Company name AND Company not allowed")
 
     def __str__(self):
-        return " - ".join([self.company.display_name, (self.worker.display_name or "Anonymous")])
+        return " - ".join([self.company.display_name, (self.reviewer.display_name or "Anonymous")])
+
+
+class HiringType(models.TextChoices):
+    FREELANCE = "Freelance"
+    CONTRACT = "Contract"
+    EMPLOYEE = "Employee"
+    OTHER = "Other"
+
+
+class JobHours(models.TextChoices):
+    FULL_TIME = "Full-time"  # > 30 h/week
+    PART_TIME = "Part-time"  # < 30 h/week
+
+
+class JobDuration(models.TextChoices):
+    CASUAL = "Casual"  # 1 event or a couple of days
+    SEASONAL = "Seasonal"  # 3 to 6 months
+    LONG_TERM = "Long-term"  # More than 1 year
+    OTHER = "Other"
+
+
+class JobPlace(models.TextChoices):
+    ON_SITE = "On-site"
+    HYBRID = "Hybrid"
+    REMOTE = "Remote"
+
+
+class Job(BaseModel):
+    """
+
+    """
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=1000)
+    expires_on = models.DateTimeField(null=True, blank=True)
+    hiring_type = models.CharField(max_length=100, choices=HiringType.choices, default=HiringType.EMPLOYEE)
+    hours = models.CharField(max_length=100, choices=JobHours.choices, default=JobHours.FULL_TIME)
+    duration = models.CharField(max_length=100, choices=JobDuration.choices, default=JobDuration.SEASONAL)
+    place = models.CharField(max_length=100, choices=JobPlace.choices, default=JobPlace.ON_SITE)
+    has_sponsorship = models.BooleanField(default=False)
+    has_accommodation = models.BooleanField(default=False)
+    has_meal = models.BooleanField(default=False)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="jobs")
+    admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return " - ".join([self.company.display_name, self.title])
 
 
 class BusinessRegionTypes(models.TextChoices):

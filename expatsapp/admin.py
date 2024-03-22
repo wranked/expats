@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Company, Country, Location, Review
+from .models import Company, Country, Job, Location, Review
 
 
 class ChildModelFormInline(admin.TabularInline):
@@ -20,3 +20,4 @@ admin.site.register(Company, ParentModelAdmin)
 admin.site.register(Location, ChildModelAdmin)
 admin.site.register(Country)
 admin.site.register(Review)
+admin.site.register(Job)
