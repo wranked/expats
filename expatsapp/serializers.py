@@ -14,8 +14,16 @@ class ReviewSerializer(serializers.ModelSerializer):
             "comment",
             "start_date",
             "end_date",
-            "is_anonymous",
+            "is_anonymous",  # TODO: Replace for 'is_public'
         ]
+
+    def to_representation(self, instance):
+        data = super(ReviewSerializer, self).to_representation(instance)
+        if not data.get("is_anonymous"):
+            data["reviewer_display_name"] = instance.reviewer.display_name
+            data["reviewer_email"] = instance.reviewer.email
+            data["reviewer_avatar"] = instance.reviewer.picture
+        return data
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -29,7 +37,7 @@ class CompanySerializer(serializers.ModelSerializer):
             "legal_name",
             "description",
             "category",
-            # "location",
+            "picture",
             "rating_summary",
         ]
 
@@ -37,6 +45,7 @@ class CompanySerializer(serializers.ModelSerializer):
 class JobSerializer(serializers.ModelSerializer):
 
     company_name = serializers.ReadOnlyField(source="company.display_name")
+    company_picture = serializers.ReadOnlyField(source="company.picture")
 
     class Meta:
         model = Job
@@ -44,6 +53,7 @@ class JobSerializer(serializers.ModelSerializer):
             "id",
             "title",
             "company_name",
+            "company_picture",
             "created_at",
         ]
 
@@ -51,14 +61,14 @@ class JobSerializer(serializers.ModelSerializer):
 class JobDetailsSerializer(serializers.ModelSerializer):
 
     company_name = serializers.ReadOnlyField(source="company.display_name")
+    company_picture = serializers.ReadOnlyField(source="company.picture")
 
     class Meta:
         model = Job
         fields = [
-            "id",
             "title",
             "company_name",
-            "created_at",
+            "company_picture",
             "description",
             "expires_on",
             "hiring_type",
@@ -68,4 +78,12 @@ class JobDetailsSerializer(serializers.ModelSerializer):
             "has_sponsorship",
             "has_accommodation",
             "has_meal",
+            "location",
+        ]
+
+        read_only_fields = [
+            "id",
+            "company_name",
+            "company_picture",
+            "created_at",
         ]

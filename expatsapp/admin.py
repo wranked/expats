@@ -1,23 +1,24 @@
 from django.contrib import admin
 
-from .models import Company, Country, Job, Location, Review
+from .models import Company, Job, Review
 
 
-class ChildModelFormInline(admin.TabularInline):
-    model = Location
-    extra = 0
+# class ChildModelFormInline(admin.TabularInline):
+#     model = Address
+#     extra = 0
+#
+#
+# class ParentModelAdmin(admin.ModelAdmin):
+#     inlines = (ChildModelFormInline, )
+#
+#
+# class ChildModelAdmin(admin.ModelAdmin):
+#     pass
 
 
-class ParentModelAdmin(admin.ModelAdmin):
-    inlines = (ChildModelFormInline, )
-
-
-class ChildModelAdmin(admin.ModelAdmin):
-    pass
-
-
-admin.site.register(Company, ParentModelAdmin)
-admin.site.register(Location, ChildModelAdmin)
-admin.site.register(Country)
+# admin.site.register(Company, ParentModelAdmin)
+# admin.site.register(Address, ChildModelAdmin)
+# admin.site.register(Address)
+admin.site.register(Company)
 admin.site.register(Review)
 admin.site.register(Job)

@@ -1,0 +1,26 @@
+[
+{
+    "model": "expatsapp.company",
+    "fields": {
+        "created_at": "2024-02-24T14:30:02.165Z",
+        "modified_at": "2024-02-24T14:30:02.165Z",
+        "display_name": "Amadria Park Hotel",
+        "legal_name": "Amadria D.O.O",
+        "description": "Luxury Hotel",
+        "category": "Hospitality",
+        "picture": "https://i.pravatar.cc/150?u=don-armando"
+    }
+},
+    {
+    "model": "expatsapp.company",
+    "fields": {
+        "created_at": "2024-02-24T14:30:02.165Z",
+        "modified_at": "2024-02-24T14:30:02.165Z",
+        "display_name": "Morfar",
+        "legal_name": "Morfar D.O.O",
+        "description": "Argentinian Empanadas",
+        "category": "Gastronomy",
+        "picture": "https://i.pravatar.cc/150?u=morfar"
+    }
+}
+]

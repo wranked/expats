@@ -64,8 +64,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'drf_spectacular',
-    'users',
+
     'expatsapp',
+    'users',
+    'locations',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -134,6 +136,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# AUTHENTICATION_BACKENDS = [
+#     'django.contrib.auth.backends.ModelBackend',
+#     'users.authentication.EmailAuthBackend',
+# ]
 
 
 # Internationalization

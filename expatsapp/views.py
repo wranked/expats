@@ -1,6 +1,6 @@
-from rest_framework import status
+from django.db.models import Q
 from rest_framework.exceptions import NotFound
-from rest_framework.generics import ListAPIView, get_object_or_404
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -58,6 +58,11 @@ class CompanyReviewViewSet(ModelViewSet):
         self.check_object_permissions(self.request, obj)
         return obj
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset().exclude(reviewer_id=self.request.user.id)
+        serializer = self.get_serializer_class()(queryset, many=True)
+        return Response(serializer.data)
+
     def perform_create(self, serializer):
         company_id = self.kwargs.get("company_pk")
         try:
@@ -102,3 +107,13 @@ class CompanyJobViewSet(ModelViewSet):
         except Company.DoesNotExist:
             raise NotFound()
         return self.queryset.filter(company=company)
+
+    def perform_create(self, serializer):
+        company_id = self.kwargs.get("company_pk")
+        try:
+            company = Company.objects.get(id=company_id)
+        except Company.DoesNotExist:
+            raise NotFound()
+        serializer.save(
+            company=company,
+        )

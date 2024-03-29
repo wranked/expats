@@ -1,0 +1,2741 @@
+[
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Afghanistan",
+            "country_code": "AF",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Akrotiri",
+            "country_code": "QZ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Albania",
+            "country_code": "AL",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Algeria",
+            "country_code": "DZ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "American Samoa",
+            "country_code": "AS",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Andorra",
+            "country_code": "AD",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Angola",
+            "country_code": "AO",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Anguilla",
+            "country_code": "AI",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Antigua and Barbuda",
+            "country_code": "AG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Argentina",
+            "country_code": "AR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Armenia",
+            "country_code": "AM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Aruba",
+            "country_code": "AW",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Australia",
+            "country_code": "AU",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Austria",
+            "country_code": "AT",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Azerbaijan",
+            "country_code": "AZ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Bahrain",
+            "country_code": "BH",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Bangladesh",
+            "country_code": "BD",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Barbados",
+            "country_code": "BB",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Belarus",
+            "country_code": "BY",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Belgium",
+            "country_code": "BE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Belize",
+            "country_code": "BZ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Benin",
+            "country_code": "BJ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Bermuda",
+            "country_code": "BM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Bhutan",
+            "country_code": "BT",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Bolivia",
+            "country_code": "BO",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Bonaire, Sint Eustatius, and Saba",
+            "country_code": "BQ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Bosnia and Herzegovina",
+            "country_code": "BA",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Botswana",
+            "country_code": "BW",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Brazil",
+            "country_code": "BR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "British Indian Ocean Territory",
+            "country_code": "IO",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "British Virgin Islands",
+            "country_code": "VG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Brunei",
+            "country_code": "BN",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Bulgaria",
+            "country_code": "BG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Burkina Faso",
+            "country_code": "BF",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Burundi",
+            "country_code": "BI",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Cabo Verde",
+            "country_code": "CV",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Cambodia",
+            "country_code": "KH",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Cameroon",
+            "country_code": "CM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Canada",
+            "country_code": "CA",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Cayman Islands",
+            "country_code": "KY",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Central African Republic",
+            "country_code": "CF",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Chad",
+            "country_code": "TD",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Chile",
+            "country_code": "CL",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "China",
+            "country_code": "CN",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Christmas Island",
+            "country_code": "CX",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Cocos (Keeling) Islands",
+            "country_code": "CC",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Colombia",
+            "country_code": "CO",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Comoros",
+            "country_code": "KM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Congo (Brazzaville)",
+            "country_code": "CG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Congo (Kinshasa)",
+            "country_code": "CD",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Cook Islands",
+            "country_code": "CK",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Costa Rica",
+            "country_code": "CR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "CÃ´te d'Ivoire",
+            "country_code": "CI",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Croatia",
+            "country_code": "HR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Cuba",
+            "country_code": "CU",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "CuraÃ§ao",
+            "country_code": "CW",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Cyprus",
+            "country_code": "CY",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Czechia",
+            "country_code": "CZ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Denmark",
+            "country_code": "DK",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Dhekelia",
+            "country_code": "XD",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Djibouti",
+            "country_code": "DJ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Dominica",
+            "country_code": "DM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Dominican Republic",
+            "country_code": "DO",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Ecuador",
+            "country_code": "EC",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Egypt",
+            "country_code": "EG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "El Salvador",
+            "country_code": "SV",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Equatorial Guinea",
+            "country_code": "GQ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Eritrea",
+            "country_code": "ER",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Estonia",
+            "country_code": "EE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Ethiopia",
+            "country_code": "ET",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Falkland Islands (Islas Malvinas)",
+            "country_code": "FK",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Faroe Islands",
+            "country_code": "FO",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Federated States of Micronesia",
+            "country_code": "FM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Fiji",
+            "country_code": "FJ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Finland",
+            "country_code": "FI",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "France",
+            "country_code": "FR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "French Guiana",
+            "country_code": "GF",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "French Polynesia",
+            "country_code": "PF",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "French Southern and Antarctic Lands",
+            "country_code": "TF",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Gabon",
+            "country_code": "GA",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Gaza Strip",
+            "country_code": "XG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Georgia",
+            "country_code": "GE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Germany",
+            "country_code": "DE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Ghana",
+            "country_code": "GH",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Gibraltar",
+            "country_code": "GI",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Greece",
+            "country_code": "GR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Greenland",
+            "country_code": "GL",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Grenada",
+            "country_code": "GD",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Guadeloupe",
+            "country_code": "GP",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Guam",
+            "country_code": "GU",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Guatemala",
+            "country_code": "GT",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Guernsey",
+            "country_code": "GG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Guinea",
+            "country_code": "GN",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Guinea-Bissau",
+            "country_code": "GW",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Guyana",
+            "country_code": "GY",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Haiti",
+            "country_code": "HT",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Honduras",
+            "country_code": "HN",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Hong Kong",
+            "country_code": "HK",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Hungary",
+            "country_code": "HU",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Iceland",
+            "country_code": "IS",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "India",
+            "country_code": "IN",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Indonesia",
+            "country_code": "ID",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Iran",
+            "country_code": "IR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Iraq",
+            "country_code": "IQ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Ireland",
+            "country_code": "IE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Isle Of Man",
+            "country_code": "IM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Israel",
+            "country_code": "IL",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Italy",
+            "country_code": "IT",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Jamaica",
+            "country_code": "JM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Japan",
+            "country_code": "JP",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Jersey",
+            "country_code": "JE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Jordan",
+            "country_code": "JO",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Kazakhstan",
+            "country_code": "KZ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Kenya",
+            "country_code": "KE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Kiribati",
+            "country_code": "KI",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Kosovo",
+            "country_code": "XK",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Kuwait",
+            "country_code": "KW",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Kyrgyzstan",
+            "country_code": "KG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Laos",
+            "country_code": "LA",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Latvia",
+            "country_code": "LV",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Lebanon",
+            "country_code": "LB",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Lesotho",
+            "country_code": "LS",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Liberia",
+            "country_code": "LR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Libya",
+            "country_code": "LY",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Liechtenstein",
+            "country_code": "LI",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Lithuania",
+            "country_code": "LT",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Luxembourg",
+            "country_code": "LU",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Macau",
+            "country_code": "MO",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Macedonia",
+            "country_code": "MK",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Madagascar",
+            "country_code": "MG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Malawi",
+            "country_code": "MW",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Malaysia",
+            "country_code": "MY",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Maldives",
+            "country_code": "MV",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Mali",
+            "country_code": "ML",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Malta",
+            "country_code": "MT",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Marshall Islands",
+            "country_code": "MH",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Martinique",
+            "country_code": "MQ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Mauritania",
+            "country_code": "MR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Mauritius",
+            "country_code": "MU",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Mayotte",
+            "country_code": "YT",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Mexico",
+            "country_code": "MX",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Moldova",
+            "country_code": "MD",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Monaco",
+            "country_code": "MC",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Mongolia",
+            "country_code": "MN",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Montenegro",
+            "country_code": "ME",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Montserrat",
+            "country_code": "MS",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Morocco",
+            "country_code": "MA",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Mozambique",
+            "country_code": "MZ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Myanmar",
+            "country_code": "MM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Namibia",
+            "country_code": "NA",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Nauru",
+            "country_code": "NR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Nepal",
+            "country_code": "NP",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Netherlands",
+            "country_code": "NL",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "New Caledonia",
+            "country_code": "NC",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "New Zealand",
+            "country_code": "NZ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Nicaragua",
+            "country_code": "NI",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Niger",
+            "country_code": "NE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Nigeria",
+            "country_code": "NG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Niue",
+            "country_code": "NU",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Norfolk Island",
+            "country_code": "NF",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "North Korea",
+            "country_code": "KP",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Northern Mariana Islands",
+            "country_code": "MP",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Norway",
+            "country_code": "NO",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Oman",
+            "country_code": "OM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Pakistan",
+            "country_code": "PK",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Palau",
+            "country_code": "PW",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Panama",
+            "country_code": "PA",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Papua New Guinea",
+            "country_code": "PG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Paracel Islands",
+            "country_code": "XP",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Paraguay",
+            "country_code": "PY",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Peru",
+            "country_code": "PE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Philippines",
+            "country_code": "PH",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Pitcairn Islands",
+            "country_code": "PN",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Poland",
+            "country_code": "PL",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Portugal",
+            "country_code": "PT",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Puerto Rico",
+            "country_code": "PR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Qatar",
+            "country_code": "QA",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Reunion",
+            "country_code": "RE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Romania",
+            "country_code": "RO",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Russia",
+            "country_code": "RU",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Rwanda",
+            "country_code": "RW",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Saint Barthelemy",
+            "country_code": "BL",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Saint Helena, Ascension, and Tristan da Cunha",
+            "country_code": "SH",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Saint Kitts and Nevis",
+            "country_code": "KN",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Saint Lucia",
+            "country_code": "LC",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Saint Martin",
+            "country_code": "MF",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Saint Pierre and Miquelon",
+            "country_code": "PM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Saint Vincent and the Grenadines",
+            "country_code": "VC",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Samoa",
+            "country_code": "WS",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "San Marino",
+            "country_code": "SM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Sao Tome and Principe",
+            "country_code": "ST",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Saudi Arabia",
+            "country_code": "SA",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Senegal",
+            "country_code": "SN",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Serbia",
+            "country_code": "RS",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Seychelles",
+            "country_code": "SC",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Sierra Leone",
+            "country_code": "SL",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Singapore",
+            "country_code": "SG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Sint Maarten",
+            "country_code": "SX",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Slovakia",
+            "country_code": "SK",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Slovenia",
+            "country_code": "SI",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Solomon Islands",
+            "country_code": "SB",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Somalia",
+            "country_code": "SO",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "South Africa",
+            "country_code": "ZA",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "South Georgia and South Sandwich Islands",
+            "country_code": "GS",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "South Korea",
+            "country_code": "KR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "South Sudan",
+            "country_code": "SS",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Spain",
+            "country_code": "ES",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Spratly Islands",
+            "country_code": "XS",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Sri Lanka",
+            "country_code": "LK",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Sudan",
+            "country_code": "SD",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Suriname",
+            "country_code": "SR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Svalbard",
+            "country_code": "XR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Swaziland",
+            "country_code": "SZ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Sweden",
+            "country_code": "SE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Switzerland",
+            "country_code": "CH",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Syria",
+            "country_code": "SY",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Taiwan",
+            "country_code": "TW",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Tajikistan",
+            "country_code": "TJ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Tanzania",
+            "country_code": "TZ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Thailand",
+            "country_code": "TH",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "The Bahamas",
+            "country_code": "BS",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "The Gambia",
+            "country_code": "GM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Timor-Leste",
+            "country_code": "TL",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Togo",
+            "country_code": "TG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Tokelau",
+            "country_code": "TK",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Tonga",
+            "country_code": "TO",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Trinidad and Tobago",
+            "country_code": "TT",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Tunisia",
+            "country_code": "TN",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Turkey",
+            "country_code": "TR",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Turkmenistan",
+            "country_code": "TM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Turks and Caicos Islands",
+            "country_code": "TC",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Tuvalu",
+            "country_code": "TV",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "U.S. Virgin Islands",
+            "country_code": "VI",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Uganda",
+            "country_code": "UG",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Ukraine",
+            "country_code": "UA",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "United Arab Emirates",
+            "country_code": "AE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "United Kingdom",
+            "country_code": "GB",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "United States",
+            "country_code": "US",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Uruguay",
+            "country_code": "UY",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Uzbekistan",
+            "country_code": "UZ",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Vanuatu",
+            "country_code": "VU",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Vatican City",
+            "country_code": "VA",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Venezuela",
+            "country_code": "VE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Vietnam",
+            "country_code": "VN",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Wallis and Futuna",
+            "country_code": "WF",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "West Bank",
+            "country_code": "XW",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Yemen",
+            "country_code": "YE",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Zambia",
+            "country_code": "ZM",
+            "subregion": "",
+            "business_region": ""
+        }
+    },
+    {
+        "model":"locations.country",
+        "fields":{
+            "created_at": "2024-02-24T14:30:02.165Z",
+            "modified_at": "2024-02-24T14:30:02.165Z",
+            "name": "Zimbabwe",
+            "country_code": "ZW",
+            "subregion": "",
+            "business_region": ""
+        }
+    }
+]
