@@ -20,15 +20,17 @@ from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 from expatsapp.routers import router, company_router
+from blog.routers import blog_router
 from expatsapp.views import ReviewViewSet
-# from users.routers import user_router
+from blog.urls import urlpatterns as blog_urlpatterns
 from users.views import UserLogin, UserLogout, UserRegister, UserView
 
-urlpatterns = [
+urlpatterns = ([
     path('admin/', admin.site.urls),
 
     path('', include(router.urls)),
     path('', include(company_router.urls)),
+    path('', include(blog_router.urls)),
 
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
@@ -40,7 +42,7 @@ urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-]
+])  # + blog_urlpatterns)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

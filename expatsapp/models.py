@@ -81,6 +81,11 @@ class Review(BaseModel):
     #     if self.company_name and self.company:
     #         raise ValidationError("Company name AND Company not allowed")
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['company', 'reviewer'], name="unique_reviewer_per_company"),
+        ]
+
     def __str__(self):
         return " - ".join([self.company.display_name, (self.reviewer.display_name or "Anonymous")])
 
