@@ -36,7 +36,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     def create(self, data):
         user_obj = UserModel.objects.create_user(
-            username="dummy_username",  # TODO: Make it optional
+            username=data.get("username", None),  # TODO: Make it optional
             email=data["email"],
             password=data["password"],
             first_name=data["first_name"],
