@@ -1,0 +1,23 @@
+[
+    {
+        "email": "\"gustavo100@tempel.com\"",
+        "password": "\"dummy_password\"",
+        "first_name": "\"\"",
+        "last_name": "\"\"",
+        "username": "\"\""
+    },
+    {
+        "email": "\"gustavo200@tempel.com\"",
+        "password": "\"dummy_password\"",
+        "first_name": "\"Gustavo\"",
+        "last_name": "\"Tempel\"",
+        "username": "\"\""
+    },
+    {
+        "email": "\"gustavo300@tempel.com\"",
+        "password": "\"dummy_password\"",
+        "first_name": "\"Gustavo\"",
+        "last_name": "\"Tempel\"",
+        "username": "\"gustavo300\""
+    }
+]

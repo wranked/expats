@@ -28,6 +28,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "picture",
+            "display_name",
         ]
 
         write_only_fields = [
@@ -35,17 +36,16 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, data):
-        user_obj = UserModel.objects.create_user(
-            username=data.get("username", None),  # TODO: Make it optional
+        user = UserModel.objects.create_user(
+            username=data.get("username", None),
             email=data["email"],
             password=data["password"],
-            first_name=data["first_name"],
-            last_name=data["last_name"],
-            picture=data["picture"],
+            first_name=data.get("first_name", ""),
+            last_name=data.get("last_name", ""),
+            picture=data["picture"],  # TODO: Make it optional
         )
-        # user_obj.username = clean_data["username"]
-        user_obj.save()
-        return user_obj
+        # user.save()  # TODO: Check if it is necessary this .save() call
+        return user
 
 
 class UserLoginSerializer(serializers.Serializer):

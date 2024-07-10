@@ -7,14 +7,14 @@ from users.models import CustomUser
 
 @pytest.fixture
 def dummy_user():
-    CustomUser.objects.create_user("test_user", "user@test.com", "password")
-    return CustomUser.objects.get(username="test_user")
+    CustomUser.objects.create_user("user@test.com", "password")
+    return CustomUser.objects.get(email="user@test.com")
 
 
 @pytest.fixture
 def dummy_user2():
-    CustomUser.objects.create_user("test_user2", "user2@test.com", "password")
-    return CustomUser.objects.get(username="test_user2")
+    CustomUser.objects.create_user("user2@test.com", "password")
+    return CustomUser.objects.get(email="user2@test.com")
 
 
 @pytest.fixture
