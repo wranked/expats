@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('companies', '0005_alter_branch_options'),
-        ('locations', '0004_alter_location_level_type'),
+        ('locations', '0002_alter_location_level_type'),
     ]
 
     operations = [

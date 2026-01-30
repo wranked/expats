@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('locations', '0007_alter_location_level_type'),
+        ('locations', '0005_remove_address_company_address_branch_and_more'),
     ]
 
     operations = [

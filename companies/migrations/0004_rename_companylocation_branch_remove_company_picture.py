@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('locations', '0004_alter_location_level_type'),
+        ('locations', '0002_alter_location_level_type'),
         ('companies', '0003_alter_company_reviews_count_and_more'),
     ]
 

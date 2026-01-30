@@ -15,7 +15,8 @@ class Post(BaseModel):
     # categories = models.CharField(CategoryType)
     content = models.TextField()
     # author = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE)
-    language_code = models.CharField(max_length=10, choices=LanguageCodeTypes.choices, default=LanguageCodeTypes.ENGLISH)
+    # TODO: Revert to using LanguageCodeTypes.choices once migration issues are resolved
+    language_code = models.CharField(max_length=10, choices=[('en', 'English'), ('hr', 'Croatian'), ('de', 'German'), ('es', 'Spanish')], default='en')
     # country = models.ForeignKey("locations.Country", on_delete=models.CASCADE, blank=True, null=True)
     # tags
 

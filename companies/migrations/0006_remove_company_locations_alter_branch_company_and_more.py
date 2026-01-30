@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('locations', '0007_alter_location_level_type'),
+        ('locations', '0002_alter_location_level_type'),
         ('companies', '0005_alter_branch_options'),
     ]
 
