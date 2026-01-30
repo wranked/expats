@@ -7,6 +7,14 @@ class BusinessRegionTypes(models.TextChoices):
     EMEA = "Europe Middle East/Africa"
 
 
+class RegionTypes(models.TextChoices):
+    AFRICA = "Africa"
+    AMERICAS = "Americas"
+    ASIA = "Asia"
+    EUROPE = "Europe"
+    OCEANIA = "Oceania"
+
+
 class SubRegionTypes(models.TextChoices):
     NORTH_AMERICA = "North America"
     SOUTH_AMERICA = "South America"
@@ -23,6 +31,13 @@ class SubRegionTypes(models.TextChoices):
     MIDDLE_EAST = "Middle East"
     NORTHERN_AFRICA = "Northern Africa"
     SOUTHERN_AFRICA = "Southern Africa"
+
+
+class AreaTypes(models.TextChoices):
+    """ Area Types for economic and political regions """
+    EUROPEAN_UNION = "European Union"
+    SCHENGEN = "Schengen Area"
+    LATIN_AMERICA = "Latin America"
 
 
 class AddressTypes(models.TextChoices):

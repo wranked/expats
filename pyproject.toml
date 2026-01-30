@@ -6,7 +6,7 @@ authors = ["Gustavo Tempel <gtempel@hotmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-Django = "4"
+Django = "^4.2"
 python-dotenv = "^1.0.1"
 psycopg2-binary = "^2.9.9"
 djangorestframework = "^3.14.0"
@@ -16,6 +16,8 @@ Markdown = "^3.6"
 django-filter = "23.5"
 pytest-django = "^4.8.0"
 django-cors-headers = "^4.4.0"
+cloudinary = "^1.42.2"
+geopy = "^2.4.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
