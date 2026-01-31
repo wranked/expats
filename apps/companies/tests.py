@@ -1,7 +1,8 @@
 import pytest
 
 from .constants import CategoryTypes
-from .models import Company, Review
+from .models import Company
+from apps.reviews.models import Review
 from apps.users.models import CustomUser
 
 
@@ -39,7 +40,7 @@ def test_create_review(dummy_company, dummy_user):
         company=dummy_company,
         reviewer=dummy_user,
     )
-    assert dummy_company.rating_summary == {1: 0, 2: 0, 3: 0, 4: 0, 5: 1, "count": 1, "media": 5}
+    assert dummy_company.rating_summary == {1: 0, 2: 0, 3: 0, 4: 0, 5: 1}
 
 
 @pytest.mark.django_db
@@ -54,7 +55,7 @@ def test_create_2_reviews(dummy_company, dummy_user, dummy_user2):
         company=dummy_company,
         reviewer=dummy_user,
     )
-    assert dummy_company.rating_summary == {1: 0, 2: 0, 3: 0, 4: 0, 5: 1, "count": 1, "media": 5}
+    assert dummy_company.rating_summary == {1: 0, 2: 0, 3: 0, 4: 0, 5: 1}
 
     Review.objects.create(
         rating=2,
@@ -66,4 +67,4 @@ def test_create_2_reviews(dummy_company, dummy_user, dummy_user2):
         company=dummy_company,
         reviewer=dummy_user2,
     )
-    assert dummy_company.rating_summary == {1: 0, 2: 1, 3: 0, 4: 0, 5: 1, "count": 2, "media": 3.5}
+    assert dummy_company.rating_summary == {1: 0, 2: 1, 3: 0, 4: 0, 5: 1}

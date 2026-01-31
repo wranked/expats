@@ -121,6 +121,7 @@ DATABASES = {
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
         "HOST": os.environ.get("POSTGRES_HOST"),
         "PORT": os.environ.get("POSTGRES_PORT"),
+        "ATOMIC_REQUESTS": True,
     },
 }
 
@@ -133,8 +134,17 @@ if os.environ.get('GITHUB_WORKFLOW'):
            'PASSWORD': 'postgres',
            'HOST': '127.0.0.1',
            'PORT': '5432',
+           'ATOMIC_REQUESTS': True,
         }
     }
+
+
+# Enable atomic requests for all databases
+ATOMIC_REQUESTS = True
+
+# Ensure ATOMIC_REQUESTS is set in all database configs
+for db_config in DATABASES.values():
+    db_config.setdefault('ATOMIC_REQUESTS', True)
 
 
 # Password validation
