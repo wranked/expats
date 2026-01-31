@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class LanguageCodeTypes(models.Choices):
+class LanguageCodeTypes(models.TextChoices):
     """ Language codes based in ISO 639 standardized nomenclature """
 
     ENGLISH = "en"

@@ -52,8 +52,7 @@ class Location(BaseModel):
     """ Location model to store the location of a company or user """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100, null=True, blank=True)
-    # TODO: Revert to using LocationNameTypes.choices once migration issues are resolved
-    level_type = models.CharField(max_length=50, choices=[('CITY', 'City'), ('COUNTY', 'County'), ('DEPARTMENT', 'Department'), ('DISTRICT', 'District'), ('MUNICIPALITY', 'Municipality'), ('PROVINCE', 'Province'), ('REGION', 'Region'), ('STATE', 'State'), ('TOWN', 'Town'), ('VILLAGE', 'Village')], default='CITY')
+    level_type = models.CharField(max_length=50, choices=LocationNameTypes.choices, default=LocationNameTypes.CITY)
     postal_code = models.CharField(max_length=100, null=True, blank=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name="locations")
     parent = models.ForeignKey(

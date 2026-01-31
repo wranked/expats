@@ -4,7 +4,7 @@ from common.constants import LanguageCodeTypes
 from common.models import BaseModel
 
 
-class CategoryType(models.Choices):
+class CategoryType(models.TextChoices):
     BLOG = "Blog"
     UTILS = "Utils"
 
@@ -15,8 +15,7 @@ class Post(BaseModel):
     # categories = models.CharField(CategoryType)
     content = models.TextField()
     # author = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE)
-    # TODO: Revert to using LanguageCodeTypes.choices once migration issues are resolved
-    language_code = models.CharField(max_length=10, choices=[('en', 'English'), ('hr', 'Croatian'), ('de', 'German'), ('es', 'Spanish')], default='en')
+    language_code = models.CharField(max_length=10, choices=LanguageCodeTypes.choices)
     # country = models.ForeignKey("locations.Country", on_delete=models.CASCADE, blank=True, null=True)
     # tags
 

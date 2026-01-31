@@ -48,7 +48,7 @@ class AddressTypes(models.TextChoices):
     SHIPPING = "Shipping"
 
 
-class LocationNameTypes(models.Choices):
+class LocationNameTypes(models.TextChoices):
     CITY = "CITY"
     COUNTY = "COUNTY"
     DEPARTMENT = "DEPARTMENT"
