@@ -20,14 +20,14 @@ from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 # from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from companies.routers import router, company_router
-from blog.routers import blog_router
-from jobs.routers import jobs_router
-from reviews.routers import reviews_router
+from apps.companies.routers import router, company_router
+from apps.blog.routers import blog_router
+from apps.jobs.routers import jobs_router
+from apps.reviews.routers import reviews_router
 
 # from companies.views import ReviewViewSet
-from blog.urls import urlpatterns as blog_urlpatterns
-from users.views import UserLogin, UserLogout, UserRegister, UserView
+from apps.blog.urls import urlpatterns as blog_urlpatterns
+from apps.users.views import UserLogin, UserLogout, UserRegister, UserView
 
 urlpatterns = ([
     path('admin/', admin.site.urls),

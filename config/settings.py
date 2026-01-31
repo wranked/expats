@@ -68,12 +68,12 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'django_filters',
 
-    'blog',
-    'companies',
-    'jobs',
-    'locations',
-    'reviews',
-    'users',
+    'apps.blog',
+    'apps.companies',
+    'apps.jobs',
+    'apps.locations',
+    'apps.reviews',
+    'apps.users',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
