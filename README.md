@@ -5,7 +5,7 @@ A Django application for managing expatriate data, including blogs, companies, j
 ## Prerequisites
 
 - Python 3.13
-- Poetry (for dependency management)
+- uv (for dependency management)
 
 ## Setup
 
@@ -15,31 +15,40 @@ A Django application for managing expatriate data, including blogs, companies, j
    cd expats
    ```
 
-2. Install dependencies using Poetry:
+2. Install uv (if not already installed):
    ```bash
-   poetry install
+   # Windows (PowerShell)
+   powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+   
+   # macOS/Linux
+   curl -LsSf https://astral.sh/uv/install.sh | sh
    ```
 
-3. Set up the database:
+3. Install dependencies:
    ```bash
-   poetry run python manage.py migrate
+   uv sync
    ```
 
-4. (Optional) Create a superuser:
+4. Set up the database:
    ```bash
-   poetry run python manage.py createsuperuser
+   uv run python manage.py migrate
    ```
 
-5. (Optional) Load initial data:
+5. (Optional) Create a superuser:
    ```bash
-   poetry run python manage.py loaddata fixtures/companies.json fixtures/countries.json
+   uv run python manage.py createsuperuser
+   ```
+
+6. (Optional) Load initial data:
+   ```bash
+   uv run python manage.py loaddata fixtures/companies.json fixtures/countries.json
    ```
 
 ## Running the Application
 
 To start the development server:
 ```bash
-poetry run python manage.py runserver
+uv run python manage.py runserver
 ```
 
 The application will be available at `http://127.0.0.1:8000/`.
@@ -48,12 +57,12 @@ The application will be available at `http://127.0.0.1:8000/`.
 
 To run the test suite:
 ```bash
-poetry run pytest
+uv run pytest
 ```
 
 For test coverage:
 ```bash
-poetry run pytest --cov
+uv run pytest --cov
 ```
 
 ## Development Workflow
@@ -61,18 +70,34 @@ poetry run pytest --cov
 - Make changes to models or code
 - Create migrations if needed:
   ```bash
-  poetry run python manage.py makemigrations
+  uv run python manage.py makemigrations
   ```
 - Apply migrations:
   ```bash
-  poetry run python manage.py migrate
+  uv run python manage.py migrate
   ```
 - Run tests to ensure everything works
 - Commit your changes
+
+## Managing Dependencies
+
+- Add a package:
+  ```bash
+  uv add <package-name>
+  ```
+- Remove a package:
+  ```bash
+  uv remove <package-name>
+  ```
+- Update dependencies:
+  ```bash
+  uv lock --upgrade
+  ```
 
 ## Project Structure
 
 - `apps/`: Django apps (blog, companies, jobs, locations, reviews, users, common)
 - `config/`: Django settings
 - `fixtures/`: Initial data
-- `pyproject.toml`: Poetry dependencies
+- `pyproject.toml`: Project metadata and dependencies (PEP 621)
+- `uv.lock`: Locked dependencies for reproducible installs
