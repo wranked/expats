@@ -8,8 +8,8 @@ This document outlines the standard rules, architecture, and best practices for 
 - **Framework**: Django 5.2 (latest LTS with async support)
 - **API**: Django REST Framework (DRF) with DRF Spectacular for OpenAPI docs
 - **Database**: PostgreSQL
-- **Dependency Management**: Poetry
-- **Environment**: Virtual environment via Poetry
+- **Dependency Management**: uv (fast, modern Python package manager)
+- **Environment**: Virtual environment auto-managed by uv
 - **Testing**: pytest with pytest-django
 - **Coverage**: pytest-cov for code coverage
 - **Linting/Formatting**: Follow Django best practices; use Black/Flake8 if needed
@@ -32,10 +32,9 @@ project-root/
 ├── config/                      # Django settings (renamed from project name)
 ├── fixtures/                    # Initial data
 ├── manage.py
-├── pyproject.toml               # Poetry dependencies
-├── poetry.lock
+├── pyproject.toml               # PEP 621 format for uv
+├── uv.lock                      # Locked dependencies
 ├── pytest.ini                   # Test configuration
-├── requirements.txt             # For deployment
 └── README.md
 ```
 
@@ -60,17 +59,24 @@ Alternatively, apps can be placed directly in the project root for smaller proje
 1. **Setup**:
    - Clone repo
    - Install Python 3.13
-   - `poetry install`
-   - `poetry run python manage.py migrate`
-   - `poetry run python manage.py createsuperuser`
+   - Install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh` (macOS/Linux) or `powershell -c "irm https://astral.sh/uv/install.ps1 | iex"` (Windows)
+   - `uv sync`
+   - `uv run python manage.py migrate`
+   - `uv run python manage.py createsuperuser`
 
 2. **Coding**:
-   - Use Poetry: `poetry run python manage.py <command>`
-   - Migrations: `makemigrations` then `migrate`
-   - Testing: `poetry run pytest` (aim for 80%+ coverage)
+   - Run commands: `uv run python manage.py <command>`
+   - Migrations: `uv run python manage.py makemigrations` then `migrate`
+   - Testing: `uv run pytest` (aim for 80%+ coverage)
    - Commit regularly with descriptive messages
 
-3. **Best Practices**:
+3. **Dependency Management**:
+   - Add package: `uv add <package-name>`
+   - Remove package: `uv remove <package-name>`
+   - Update dependencies: `uv lock --upgrade`
+   - Sync environment: `uv sync`
+
+4. **Best Practices**:
    - Write tests for new features
    - Use type hints where possible
    - Follow Django's naming conventions
@@ -78,16 +84,18 @@ Alternatively, apps can be placed directly in the project root for smaller proje
 
 ## Common Issues and Solutions
 - **Migration Recursion**: Use `TextChoices` and avoid hardcoded choices in models.
-- **Dependency Conflicts**: Use Poetry to manage versions.
+- **Dependency Conflicts**: Use uv to manage versions; `uv.lock` ensures reproducibility.
 - **Async Errors**: Ensure compatible libraries for Django 5.2.
 - **Testing**: Use fixtures and factories for reliable tests.
+- **Vercel Deployment**: Use PEP 621 `pyproject.toml` format; uv handles installation automatically.
 
 ## Bootstrapping a New Project
 1. Create new repo
 2. Copy `rules.md` and adapt
-3. Set up Poetry: `poetry init`
-4. Add dependencies: `poetry add django djangorestframework`
-5. Create project: `django-admin startproject config .`
-6. Follow structure above
+3. Install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh` (or Windows equivalent)
+4. Initialize project: `uv init`
+5. Add dependencies: `uv add django djangorestframework`
+6. Create project: `uv run django-admin startproject config .`
+7. Follow structure above
 
 This rules file ensures consistency across projects. Update as needed for new standards.
