@@ -1,2 +1,2 @@
-pip install -r requirements.txt --break-system-packages
+uv pip install -r requirements.txt
 python3.13 manage.py collectstatic --noinput
