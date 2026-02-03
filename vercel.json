@@ -9,17 +9,9 @@
         "runtime": "python3.13",
         "buildCommand": "python manage.py collectstatic --noinput"
       }
-    },
-    {
-      "src": "staticfiles_build/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/staticfiles_build/static/$1"
-    },
     {
       "src": "/(.*)",
       "dest": "config/wsgi.py"
