@@ -37,6 +37,7 @@ urlpatterns = ([
     path('', include(blog_router.urls)),
     path('', include(jobs_router.urls)),
     path('', include(reviews_router.urls)),
+    path('api/', include('apps.pdf_processor.urls')),
 
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 

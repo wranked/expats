@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'apps.locations',
     'apps.reviews',
     'apps.users',
+    'apps.pdf_processor',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
