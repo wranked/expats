@@ -55,6 +55,13 @@ Alternatively, apps can be placed directly in the project root for smaller proje
 - **Signals**: For decoupled logic (e.g., post-save actions).
 - **Custom User Model**: Extend `AbstractUser` for flexibility.
 
+## Database Conventions
+- **Table Naming**: Always follow Django's default table naming convention: `appname_modelname` (all lowercase).
+  - ✅ Correct: `companies_company`, `pdf_processor_pdfdocument`, `blog_post`
+  - ❌ Incorrect: `pdf_documents`, `extracted_data`, `Company`
+- **Explicit db_table**: Only set `db_table` in `Meta` class if you need to override the default. When you do, always use the format `appname_modelname`.
+- **Consistency**: This ensures predictable table names and easier maintenance across all apps.
+
 ## Development Workflow
 1. **Setup**:
    - Clone repo

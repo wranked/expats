@@ -7,6 +7,7 @@ class PDFDocument(BaseModel):
     """Model to store uploaded PDF documents."""
     file = models.FileField(upload_to='pdfs/')
     original_filename = models.CharField(max_length=255)
+    source_url = models.URLField(null=True, blank=True, help_text="URL the PDF was scraped/downloaded from")
     status = models.CharField(
         max_length=20,
         choices=PDFStatus.choices,
@@ -15,7 +16,7 @@ class PDFDocument(BaseModel):
     error_message = models.TextField(blank=True)
 
     class Meta:
-        db_table = 'pdf_documents'
+        db_table = 'pdf_processor_pdfdocument'
         ordering = ['-created_at']
 
     def __str__(self):
@@ -38,7 +39,7 @@ class ExtractedData(BaseModel):
     page_number = models.IntegerField(null=True, blank=True)
 
     class Meta:
-        db_table = 'extracted_data'
+        db_table = 'pdf_processor_extracteddata'
         ordering = ['pdf_document', 'page_number', 'created_at']
 
     def __str__(self):

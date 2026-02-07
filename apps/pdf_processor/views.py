@@ -8,7 +8,7 @@ from .serializers import (
     PDFDocumentListSerializer,
     ExtractedDataSerializer
 )
-from .services import PDFProcessor
+from .services import PDFProcessor, WebPDFScraper
 
 
 class PDFDocumentViewSet(viewsets.ModelViewSet):
@@ -50,6 +50,46 @@ class PDFDocumentViewSet(viewsets.ModelViewSet):
         extracted_data = pdf_document.extracted_data.all()
         serializer = ExtractedDataSerializer(extracted_data, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, methods=['post'])
+    def download_from_url(self, request):
+        """
+        Download a PDF from a web page by scraping and finding the download link.
+        
+        Request body parameters:
+        - page_url (required): URL of the page to scrape
+        - search_text (required): Text to search for to locate the PDF link
+        
+        Returns:
+            PDFDocument: The created document with the downloaded PDF
+        """
+        page_url = request.data.get('page_url')
+        search_text = request.data.get('search_text')
+        
+        if not page_url or not search_text:
+            return Response(
+                {'error': 'page_url and search_text are required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            # Create scraper and download PDF
+            scraper = WebPDFScraper(page_url, search_text)
+            pdf_document = scraper.download_and_create_document()
+            
+            serializer = self.get_serializer(pdf_document)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            
+        except ValueError as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except Exception as e:
+            return Response(
+                {'error': f'Failed to download PDF: {str(e)}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 class ExtractedDataViewSet(viewsets.ReadOnlyModelViewSet):

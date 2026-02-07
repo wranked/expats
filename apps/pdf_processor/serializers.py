@@ -26,6 +26,7 @@ class PDFDocumentSerializer(serializers.ModelSerializer):
             'id',
             'file',
             'original_filename',
+            'source_url',
             'status',
             'error_message',
             'extracted_data',
@@ -53,6 +54,7 @@ class PDFDocumentListSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'original_filename',
+            'source_url',
             'status',
             'extracted_data_count',
             'created_at',
