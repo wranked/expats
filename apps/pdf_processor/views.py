@@ -56,25 +56,51 @@ class PDFDocumentViewSet(viewsets.ModelViewSet):
         """
         Download a PDF from a web page by scraping and finding the download link.
         
-        Request body parameters:
+        Supports two methods:
+        1. Text-based search: Find PDF link near specified text
+        2. Attribute-based search: Find PDF link by custom HTML attribute
+        
+        Text-based Request body parameters:
         - page_url (required): URL of the page to scrape
         - search_text (required): Text to search for to locate the PDF link
+        
+        Attribute-based Request body parameters:
+        - page_url (required): URL of the page to scrape
+        - attribute_name (required): HTML attribute name (e.g., 'data-fileid')
+        - attribute_value (optional): HTML attribute value
         
         Returns:
             PDFDocument: The created document with the downloaded PDF
         """
         page_url = request.data.get('page_url')
         search_text = request.data.get('search_text')
+        attribute_name = request.data.get('attribute_name')
+        attribute_value = request.data.get('attribute_value')
         
-        if not page_url or not search_text:
+        # Validate required parameters
+        if not page_url:
             return Response(
-                {'error': 'page_url and search_text are required'},
+                {'error': 'page_url is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Check that either search_text or attribute_name is provided
+        if not search_text and not attribute_name:
+            return Response(
+                {'error': 'Either search_text or attribute_name is required'},
                 status=status.HTTP_400_BAD_REQUEST
             )
         
         try:
-            # Create scraper and download PDF
-            scraper = WebPDFScraper(page_url, search_text)
+            # Create scraper with provided parameters
+            scraper = WebPDFScraper(
+                page_url=page_url,
+                search_text=search_text,
+                attribute_name=attribute_name,
+                attribute_value=attribute_value
+            )
+            
+            # Download PDF and create document
             pdf_document = scraper.download_and_create_document()
             
             serializer = self.get_serializer(pdf_document)
