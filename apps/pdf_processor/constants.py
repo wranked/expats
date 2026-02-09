@@ -11,3 +11,4 @@ class PDFStatus(models.TextChoices):
 class DataType(models.TextChoices):
     TEXT = 'text', 'Text'
     TABLE = 'table', 'Table'
+    STRUCTURED_COMPANIES = 'structured_companies', 'Structured Companies'

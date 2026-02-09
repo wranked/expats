@@ -3,12 +3,13 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from .models import PDFDocument, ExtractedData
+from .constants import PDFStatus
 from .serializers import (
     PDFDocumentSerializer,
     PDFDocumentListSerializer,
     ExtractedDataSerializer
 )
-from .services import PDFProcessor, WebPDFScraper
+from .services import PDFProcessor, WebPDFScraper, CroatianLaborPDFParser
 
 
 class PDFDocumentViewSet(viewsets.ModelViewSet):
@@ -114,6 +115,102 @@ class PDFDocumentViewSet(viewsets.ModelViewSet):
         except Exception as e:
             return Response(
                 {'error': f'Failed to download PDF: {str(e)}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+    @action(detail=True, methods=['post'])
+    def parse_croatian_labor(self, request, pk=None):
+        """
+        Parse a Croatian Ministry of Labor PDF to extract structured company data.
+        
+        The PDF should contain a table with 4 columns:
+        - R.BR. (Correlative index)
+        - NAZIV POSLODAVCA (Company legal name)
+        - OIB (Company ID)
+        - ADRESA (Address)
+        
+        Returns:
+            Structured company data extracted from the table
+        """
+        pdf_document = self.get_object()
+
+        if pdf_document.status == 'processing':
+            return Response(
+                {'error': 'Document is already being processed'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            # Use specialized parser
+            parser = CroatianLaborPDFParser(pdf_document)
+            extracted_data = parser.process_and_save()
+            
+            # Update document status
+            pdf_document.status = PDFStatus.COMPLETED
+            pdf_document.save()
+            
+            return Response({
+                'id': extracted_data.id,
+                'data_type': extracted_data.data_type,
+                'companies': extracted_data.raw_data.get('companies', []),
+                'total_count': extracted_data.raw_data.get('total_count', 0),
+                'created_at': extracted_data.created_at,
+            })
+        except Exception as e:
+            pdf_document.status = PDFStatus.FAILED
+            pdf_document.error_message = str(e)
+            pdf_document.save()
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+    @action(detail=True, methods=['get'])
+    def companies(self, request, pk=None):
+        """
+        Get structured company data from a processed Croatian labor PDF.
+        
+        Returns:
+            List of companies if the document has been parsed, otherwise empty response
+        """
+        pdf_document = self.get_object()
+        
+        # Look for structured companies data
+        company_data = pdf_document.extracted_data.filter(
+            data_type='structured_companies'
+        ).first()
+        
+        if not company_data:
+            return Response({
+                'companies': [],
+                'total_count': 0,
+                'message': 'No structured company data found. Use parse_croatian_labor endpoint first.'
+            })
+        
+        return Response({
+            'companies': company_data.raw_data.get('companies', []),
+            'total_count': company_data.raw_data.get('total_count', 0),
+            'parsed_at': company_data.created_at,
+        })
+
+    @action(detail=True, methods=['get'])
+    def parse_debug(self, request, pk=None):
+        """
+        Debug endpoint to see why rows are being filtered during parsing.
+        
+        Returns:
+            Detailed breakdown of filtering statistics
+        """
+        pdf_document = self.get_object()
+
+        try:
+            parser = CroatianLaborPDFParser(pdf_document)
+            debug_info = parser.parse_companies_table_with_debug()
+            
+            return Response(debug_info)
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 

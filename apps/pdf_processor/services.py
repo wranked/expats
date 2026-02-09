@@ -16,35 +16,20 @@ class PDFExtractor:
     def __init__(self, pdf_path: str):
         self.pdf_path = pdf_path
 
-    def extract_text(self) -> List[Dict[str, Any]]:
-        """Extract text from all pages of the PDF."""
-        extracted_pages = []
-        with pdfplumber.open(self.pdf_path) as pdf:
-            for page_num, page in enumerate(pdf.pages, start=1):
-                text = page.extract_text()
-                if text:
-                    extracted_pages.append({
-                        'page_number': page_num,
-                        'content': text.strip()
-                    })
-        return extracted_pages
-
     def extract_tables(self) -> List[Dict[str, Any]]:
-        """Extract tables from all pages of the PDF."""
+        """Extract largest table from all pages of the PDF."""
         extracted_tables = []
         with pdfplumber.open(self.pdf_path) as pdf:
             for page_num, page in enumerate(pdf.pages, start=1):
-                page_tables = page.extract_tables()
-                for table_index, table in enumerate(page_tables):
-                    if table and len(table) > 1:
-                        # Convert table to DataFrame for better structure
-                        df = pd.DataFrame(table[1:], columns=table[0])
-                        extracted_tables.append({
-                            'page_number': page_num,
-                            'table_index': table_index,
-                            'headers': table[0],
-                            'rows': df.to_dict('records')
-                        })
+                table = page.extract_table()
+                
+                if table:
+                    # Convert table to DataFrame for better structure
+                    # df = pd.DataFrame(table[2:])
+                    extracted_tables.append({
+                        'page_number': page_num,
+                        'rows': table[2:]
+                    })
         return extracted_tables
 
 
@@ -95,6 +80,237 @@ class PDFProcessor:
             self.pdf_document.error_message = str(e)
             self.pdf_document.save()
             raise
+
+
+class CroatianLaborPDFParser:
+    """Specialized parser for Croatian Ministry of Labor PDF tables."""
+
+    def __init__(self, pdf_document: PDFDocument):
+        self.pdf_document = pdf_document
+        self.extractor = PDFExtractor(pdf_document.file.path)
+
+    def parse_companies_table(self) -> List[Dict[str, Any]]:
+        """
+        Parse the companies table from the Croatian labor ministry PDF.
+        
+        Expected table structure (4 columns):
+        1. Correlative index (R.BR.)
+        2. Company legal name (NAZIV POSLODAVCA)
+        3. Company ID/OIB (OIB)
+        4. Address (ADRESA)
+        
+        Returns:
+            List of company dictionaries with cleaned data
+        """
+        companies = []
+        skipped_rows = []
+        header_keywords = ['r.br', 'naziv', 'oib', 'adresa', 'redni broj']
+        
+        # Extract all tables from PDF
+        tables_data = self.extractor.extract_tables()
+        
+        for table_info in tables_data:
+            page_number = table_info['page_number']
+            rows = table_info.get('rows', [])
+            
+            # Skip if no rows
+            if not rows:
+                continue
+            
+            # Remove empty rows (where first cell is None) by merging them with the previous row assuming they are continuations of the previous row
+            row_count = 1
+            while row_count < len(rows):
+                if rows[row_count][0] is None:
+                    for j in range(len(rows[row_count])):
+                        if rows[row_count-1][j] is not None and rows[row_count][j] is not None:
+                            rows[row_count-1][j] += " " + rows[row_count][j]           
+                    rows.pop(row_count)
+                else:
+                    row_count += 1
+            
+
+            # Process each row
+            for row_values in rows:
+                
+                # Clean row values
+                row_values = list(filter(None, row_values))
+
+                # Skip if row has less than 4 columns
+                if len(row_values) < 4:
+                    skipped_rows.append(('less_than_4_cols', row_values))
+                    continue
+                
+                # Skip header rows (check if any cell contains header keywords)
+                is_header = False
+                for cell in row_values:
+                    cell_str = str(cell).lower().strip() if cell else ''
+                    if any(keyword in cell_str for keyword in header_keywords):
+                        is_header = True
+                        break
+                
+                if is_header:
+                    skipped_rows.append(('is_header', row_values))
+                    continue
+                
+                # Clean all values
+                cleaned_values = [self._clean_value(v) for v in row_values[:4]]
+                index, legal_name, company_id, address = cleaned_values
+                
+                # Strict validation: skip incomplete rows
+                # A valid row must have at least: legal_name and company_id
+                if not legal_name:
+                    skipped_rows.append(('no_legal_name', row_values))
+                    continue
+                
+                if not company_id:
+                    skipped_rows.append(('no_company_id', row_values))
+                    continue
+                
+                # Company name should be at least 3 characters
+                if len(legal_name) < 3:
+                    skipped_rows.append(('name_too_short', row_values))
+                    continue
+                
+                company = {
+                    'index': index,
+                    'legal_name': legal_name,
+                    'company_id': company_id,
+                    'address': address,
+                    'page_number': page_number
+                }
+                
+                companies.append(company)
+        
+        return companies
+
+    def _is_valid_oib(self, oib: str) -> bool:
+        """Check if the OIB is valid (should not be empty or just whitespace)."""
+        if not oib:
+            return False
+        
+        # Remove any whitespace and check if there's something left
+        oib_clean = oib.replace(' ', '').strip()
+        
+        # Just need to ensure it has some content (not all empty/whitespace)
+        return len(oib_clean) > 0
+
+    def _clean_value(self, value: Any) -> str:
+        """Clean and normalize cell values."""
+        if value is None:
+            return ''
+        
+        # Convert to string and strip whitespace
+        cleaned = str(value).strip()
+        
+        # Remove extra whitespace
+        cleaned = ' '.join(cleaned.split())
+        
+        return cleaned
+
+    def process_and_save(self) -> ExtractedData:
+        """
+        Parse the companies table and save as structured data.
+        
+        Returns:
+            ExtractedData instance with structured company data
+        """
+        companies = self.parse_companies_table()
+        
+        # Create ExtractedData record
+        extracted_data = ExtractedData.objects.create(
+            pdf_document=self.pdf_document,
+            data_type=DataType.STRUCTURED_COMPANIES,
+            raw_data={
+                'companies': companies,
+                'total_count': len(companies),
+                'parser': 'CroatianLaborPDFParser'
+            },
+            processed=True
+        )
+        
+        return extracted_data
+    
+    def parse_companies_table_with_debug(self) -> Dict[str, Any]:
+        """
+        Parse the companies table and return detailed debug information.
+        
+        Useful for understanding why rows are being filtered.
+        
+        Returns:
+            Dictionary with companies and filtering statistics
+        """
+        companies = []
+        filters = {
+            'less_than_4_cols': 0,
+            'is_header': 0,
+            'no_legal_name': 0,
+            'no_company_id': 0,
+            'name_too_short': 0,
+        }
+        
+        header_keywords = ['r.br', 'naziv', 'oib', 'adresa', 'redni broj']
+        
+        # Extract all tables from PDF
+        tables_data = self.extractor.extract_tables()
+        
+        for table_info in tables_data:
+            page_number = table_info['page_number']
+            rows = table_info.get('rows', [])
+            
+            if not rows:
+                continue
+            
+            for row in rows:
+                row_values = list(row.values())
+                
+                if len(row_values) < 4:
+                    filters['less_than_4_cols'] += 1
+                    continue
+                
+                is_header = False
+                for cell in row_values:
+                    cell_str = str(cell).lower().strip() if cell else ''
+                    if any(keyword in cell_str for keyword in header_keywords):
+                        is_header = True
+                        break
+                
+                if is_header:
+                    filters['is_header'] += 1
+                    continue
+                
+                cleaned_values = [self._clean_value(v) for v in row_values[:4]]
+                index, legal_name, company_id, address = cleaned_values
+                
+                if not legal_name:
+                    filters['no_legal_name'] += 1
+                    continue
+                
+                if not company_id:
+                    filters['no_company_id'] += 1
+                    continue
+                
+                if len(legal_name) < 3:
+                    filters['name_too_short'] += 1
+                    continue
+                
+                company = {
+                    'index': index,
+                    'legal_name': legal_name,
+                    'company_id': company_id,
+                    'address': address,
+                    'page_number': page_number
+                }
+                
+                companies.append(company)
+        
+        return {
+            'companies': companies,
+            'total_count': len(companies),
+            'filters_applied': filters,
+            'total_rows_filtered': sum(filters.values())
+        }
+        
+        return extracted_data
 
 
 class WebPDFScraper:
