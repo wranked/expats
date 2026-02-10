@@ -9,7 +9,7 @@ from .serializers import (
     PDFDocumentListSerializer,
     ExtractedDataSerializer
 )
-from .services import PDFProcessor, WebPDFScraper, CroatianLaborPDFParser
+from .services import PDFProcessor, WebPDFScraper, CroatianLaborPDFParser, CompanySyncService
 
 
 class PDFDocumentViewSet(viewsets.ModelViewSet):
@@ -208,6 +208,36 @@ class PDFDocumentViewSet(viewsets.ModelViewSet):
             debug_info = parser.parse_companies_table_with_debug()
             
             return Response(debug_info)
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+    @action(detail=True, methods=['post'])
+    def sync_companies(self, request, pk=None):
+        """
+        Synchronize companies from PDF to the Company app.
+        
+        Rules:
+        - If company exists in Company app (by legal_name or legal_id), skip it
+        - If company is in PDF but not in Company app, create it
+        
+        Returns:
+            Synchronization statistics (total, created, skipped, errors)
+        """
+        pdf_document = self.get_object()
+
+        try:
+            sync_service = CompanySyncService(pdf_document)
+            stats = sync_service.sync_companies()
+            
+            return Response(stats)
+        except ValueError as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         except Exception as e:
             return Response(
                 {'error': str(e)},

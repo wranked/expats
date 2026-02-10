@@ -131,7 +131,7 @@ class CroatianLaborPDFParser:
 
             # Process each row
             for row_values in rows:
-                
+
                 # Clean row values
                 row_values = list(filter(None, row_values))
 
@@ -163,7 +163,7 @@ class CroatianLaborPDFParser:
                     continue
                 
                 if not company_id:
-                    skipped_rows.append(('no_company_id', row_values))
+                    skipped_rows.append(('no_legal_id', row_values))
                     continue
                 
                 # Company name should be at least 3 characters
@@ -174,7 +174,7 @@ class CroatianLaborPDFParser:
                 company = {
                     'index': index,
                     'legal_name': legal_name,
-                    'company_id': company_id,
+                    'legal_id': company_id,
                     'address': address,
                     'page_number': page_number
                 }
@@ -244,7 +244,7 @@ class CroatianLaborPDFParser:
             'less_than_4_cols': 0,
             'is_header': 0,
             'no_legal_name': 0,
-            'no_company_id': 0,
+            'no_legal_id': 0,
             'name_too_short': 0,
         }
         
@@ -286,7 +286,7 @@ class CroatianLaborPDFParser:
                     continue
                 
                 if not company_id:
-                    filters['no_company_id'] += 1
+                    filters['no_legal_id'] += 1
                     continue
                 
                 if len(legal_name) < 3:
@@ -296,7 +296,7 @@ class CroatianLaborPDFParser:
                 company = {
                     'index': index,
                     'legal_name': legal_name,
-                    'company_id': company_id,
+                    'legal_id': company_id,
                     'address': address,
                     'page_number': page_number
                 }
@@ -309,8 +309,6 @@ class CroatianLaborPDFParser:
             'filters_applied': filters,
             'total_rows_filtered': sum(filters.values())
         }
-        
-        return extracted_data
 
 
 class WebPDFScraper:
@@ -545,3 +543,79 @@ class WebPDFScraper:
             
         except Exception as e:
             raise ValueError(f"Failed to download and create document: {str(e)}")
+
+
+class CompanySyncService:
+    """Service to synchronize companies from PDF data to the Company app."""
+
+    def __init__(self, pdf_document: PDFDocument):
+        self.pdf_document = pdf_document
+
+    def sync_companies(self) -> Dict[str, Any]:
+        """
+        Synchronize companies from PDF to Company app.
+        
+        Rules:
+        - If company exists in Company app (by legal_name or legal_id), skip it
+        - If company is in PDF but not in Company app, create it
+        
+        Returns:
+            Dictionary with sync statistics
+        """
+        from apps.companies.models import Company
+        
+        # Get parsed company data from PDF
+        company_data = self.pdf_document.extracted_data.filter(
+            data_type=DataType.STRUCTURED_COMPANIES
+        ).first()
+        
+        if not company_data:
+            raise ValueError("No structured company data found. Parse the PDF first using parse_croatian_labor.")
+        
+        pdf_companies = company_data.raw_data.get('companies', [])
+        
+        stats = {
+            'total_pdf_companies': len(pdf_companies),
+            'skipped': 0,
+            'created': 0,
+            'errors': []
+        }
+        
+        for pdf_company in pdf_companies:
+            legal_name = pdf_company.get('legal_name')
+            legal_id = pdf_company.get('legal_id')
+            address = pdf_company.get('address')
+            
+            try:
+                # Check if company already exists by legal_id or legal_name
+                existing = None
+                
+                if legal_id:
+                    existing = Company.objects.filter(legal_id=legal_id).first()
+                
+                if not existing and legal_name:
+                    existing = Company.objects.filter(legal_name__iexact=legal_name).first()
+                
+                if existing:
+                    stats['skipped'] += 1
+                    continue
+                
+                # Create new company
+                Company.objects.create(
+                    legal_name=legal_name,
+                    display_name=legal_name,  # Use legal_name as display_name initially
+                    legal_id=legal_id,
+                    category='OTHER',  # Default category, can be updated later
+                    description=f"Imported from PDF. Address: {address}" if address else "Imported from PDF"
+                )
+                
+                stats['created'] += 1
+                
+            except Exception as e:
+                stats['errors'].append({
+                    'legal_name': legal_name,
+                    'legal_id': legal_id,
+                    'error': str(e)
+                })
+        
+        return stats

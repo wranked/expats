@@ -22,6 +22,7 @@ class Company(BaseModel):
     display_name = models.CharField(max_length=100, null=True, blank=True)
     id_name = models.CharField(max_length=100, unique=True, validators=[name_validator], null=True, blank=True)
     legal_name = models.CharField(max_length=100, null=True, blank=True)
+    legal_id = models.CharField(max_length=50, null=True, blank=True, help_text="Legal identification number (e.g., Croatian OIB)")
     url = models.URLField(null=True, blank=True)
     description = models.CharField(max_length=1000, null=True, blank=True)
     category = models.CharField(max_length=50, choices=CategoryTypes.choices)  # TODO: Change to industry?
