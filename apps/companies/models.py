@@ -10,6 +10,7 @@ from django.utils.text import slugify
 from apps.common.models import BaseModel
 
 from .constants import CategoryTypes
+from .utils import clean_display_name
 
 
 User = get_user_model()
@@ -19,9 +20,9 @@ class Company(BaseModel):
 
     name_validator = UnicodeUsernameValidator()
 
-    display_name = models.CharField(max_length=100, null=True, blank=True)
-    id_name = models.CharField(max_length=100, unique=True, validators=[name_validator], null=True, blank=True)
-    legal_name = models.CharField(max_length=100, null=True, blank=True)
+    display_name = models.CharField(max_length=255, null=True, blank=True)
+    id_name = models.CharField(max_length=255, unique=True, validators=[name_validator], null=True, blank=True)
+    legal_name = models.CharField(max_length=255, null=True, blank=True)
     legal_id = models.CharField(max_length=50, null=True, blank=True, help_text="Legal identification number (e.g., Croatian OIB)")
     url = models.URLField(null=True, blank=True)
     description = models.CharField(max_length=1000, null=True, blank=True)
@@ -37,6 +38,9 @@ class Company(BaseModel):
         verbose_name_plural = "Companies"
 
     def save(self, *args, **kwargs):
+        # Clean the display_name by removing common suffixes and descriptors
+        if self.display_name:
+            self.display_name = clean_display_name(self.display_name)
         if not self.id_name:
             self.id_name = slugify(self.display_name + str(int(random()*10**12)))
         super(Company, self).save(*args, **kwargs)

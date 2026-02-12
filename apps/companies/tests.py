@@ -2,6 +2,7 @@ import pytest
 
 from .constants import CategoryTypes
 from .models import Branch, Company
+from .utils import clean_display_name
 from apps.reviews.models import Review
 from apps.users.models import CustomUser
 from apps.locations.constants import BusinessRegionTypes, RegionTypes, SubRegionTypes
@@ -134,3 +135,63 @@ def test_branch_primary_constraint():
             name="Secondary",
             is_primary=True,
         )
+
+
+def test_clean_display_name_with_doo():
+    """Test removal of d.o.o. (limited liability company) suffix."""
+    result = clean_display_name("PRIMUM d.o.o. za usluge")
+    assert result == "PRIMUM"
+
+
+def test_clean_display_name_with_jdoo():
+    """Test removal of j.d.o.o. (limited liability company) suffix."""
+    result = clean_display_name("SB TRADE j.d.o.o. za prijevoz i usluge")
+    assert result == "SB TRADE"
+
+
+def test_clean_display_name_with_comma():
+    """Test removal of content after comma."""
+    result = clean_display_name("MORENO, obrt za trgovinu i ugostiteljstvo, vl. Miroslav Bilić, Knin, Marulićev trg 5")
+    assert result == "MORENO"
+
+
+def test_clean_display_name_with_obrt():
+    """Test removal of obrt (craft business) suffix."""
+    result = clean_display_name("My Business obrt")
+    assert result == "My Business"
+
+
+def test_clean_display_name_with_za():
+    """Test removal of za (for) preposition."""
+    result = clean_display_name("Company Name za nesto")
+    assert result == "Company Name"
+
+
+def test_clean_display_name_no_separator():
+    """Test that names without separators are returned unchanged."""
+    result = clean_display_name("Simple Company Name")
+    assert result == "Simple Company Name"
+
+
+def test_clean_display_name_empty_string():
+    """Test handling of empty string."""
+    result = clean_display_name("")
+    assert result == ""
+
+
+def test_clean_display_name_none():
+    """Test handling of None input."""
+    result = clean_display_name(None)
+    assert result is None
+
+
+def test_clean_display_name_with_whitespace():
+    """Test that leading/trailing whitespace is removed."""
+    result = clean_display_name("  Company Name j.d.o.o.  ")
+    assert result == "Company Name"
+
+
+def test_clean_display_name_case_insensitive():
+    """Test that separator matching is case-insensitive."""
+    result = clean_display_name("Company Name D.O.O. something")
+    assert result == "Company Name"
