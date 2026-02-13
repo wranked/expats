@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
+from django.utils import timezone
 
 from apps.common.models import BaseModel
 
@@ -33,6 +34,8 @@ class Company(BaseModel):
     # locations = models.ManyToManyField("locations.Location", through="Branch", related_name="companies", blank=True)
     reviews_rating = models.FloatField(default=0, editable=False)
     reviews_count = models.IntegerField(default=0, editable=False)
+    blacklisted_at = models.DateTimeField(null=True, blank=True)
+    last_blacklisted_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Companies"

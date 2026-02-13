@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from django.core.files.base import ContentFile
+from django.utils import timezone
 import os
 
 
@@ -551,6 +552,23 @@ class CompanySyncService:
     def __init__(self, pdf_document: PDFDocument):
         self.pdf_document = pdf_document
 
+    def reset_blacklist_status(self) -> None:
+        """
+        Reset blacklist status before sync.
+        
+        For each company with blacklisted_at not null:
+        - Copy blacklisted_at to last_blacklisted_at
+        - Set blacklisted_at to null
+        """
+        from apps.companies.models import Company
+        
+        companies_with_blacklist = Company.objects.filter(blacklisted_at__isnull=False)
+        
+        for company in companies_with_blacklist:
+            company.last_blacklisted_at = company.blacklisted_at
+            company.blacklisted_at = None
+            company.save()
+
     def sync_companies(self) -> Dict[str, Any]:
         """
         Synchronize companies from PDF to Company app.
@@ -564,6 +582,9 @@ class CompanySyncService:
         """
         from apps.companies.models import Company
         
+        # Reset blacklist status before syncing
+        self.reset_blacklist_status()
+        
         # Get parsed company data from PDF
         company_data = self.pdf_document.extracted_data.filter(
             data_type=DataType.STRUCTURED_COMPANIES
@@ -576,7 +597,7 @@ class CompanySyncService:
         
         stats = {
             'total_pdf_companies': len(pdf_companies),
-            'skipped': 0,
+            'updated': 0,
             'created': 0,
             'errors': []
         }
@@ -597,7 +618,9 @@ class CompanySyncService:
                     existing = Company.objects.filter(legal_name__iexact=legal_name).first()
                 
                 if existing:
-                    stats['skipped'] += 1
+                    stats['updated'] += 1
+                    existing.blacklisted_at = timezone.now()
+                    existing.save()
                     continue
                 
                 # Create new company
@@ -606,7 +629,8 @@ class CompanySyncService:
                     display_name=legal_name,  # Use legal_name as display_name initially
                     legal_id=legal_id,
                     category='OTHER',  # Default category, can be updated later
-                    description=f"Imported from PDF. Address: {address}" if address else "Imported from PDF"
+                    description=f"Imported from PDF. Address: {address}" if address else "Imported from PDF",
+                    blacklisted_at=timezone.now(),
                 )
                 
                 stats['created'] += 1
