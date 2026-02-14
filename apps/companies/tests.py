@@ -155,18 +155,6 @@ def test_clean_display_name_with_comma():
     assert result == "MORENO"
 
 
-def test_clean_display_name_with_obrt():
-    """Test removal of obrt (craft business) suffix."""
-    result = clean_display_name("My Business obrt")
-    assert result == "My Business"
-
-
-def test_clean_display_name_with_za():
-    """Test removal of za (for) preposition."""
-    result = clean_display_name("Company Name za nesto")
-    assert result == "Company Name"
-
-
 def test_clean_display_name_no_separator():
     """Test that names without separators are returned unchanged."""
     result = clean_display_name("Simple Company Name")

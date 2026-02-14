@@ -1,6 +1,7 @@
 import pdfplumber
-import pandas as pd
-from typing import List, Dict, Any
+import asyncio
+from asgiref.sync import sync_to_async
+from typing import List, Dict, Any, Optional
 from .models import PDFDocument, ExtractedData
 from .constants import PDFStatus, DataType
 import requests
@@ -8,7 +9,154 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from django.core.files.base import ContentFile
 from django.utils import timezone
-import os
+import logging
+
+
+logger = logging.getLogger(__name__)
+
+
+class WebPDFScraper:
+    """Service class for scraping and downloading PDF files from web pages."""
+
+    def __init__(
+        self,
+        page_url: str,
+        attribute_name: str = None, 
+        headers: Dict[str, str] = None
+    ):
+        """
+        Initialize the web scraper.
+        
+        Args:
+            page_url: URL of the page to scrape
+            
+            attribute_name: Custom attribute name to search for (e.g., 'data-fileid')
+            
+            headers: Optional HTTP headers for the request
+        """
+        self.page_url = page_url 
+        self.attribute_name = attribute_name
+        self.headers = headers or {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        }
+
+    def find_pdf_link(self) -> str:
+        """
+        Find PDF download link on the page using attribute search.
+        
+        Returns:
+            str: Absolute URL of the PDF file
+            
+        Raises:
+            ValueError: If link not found
+        """
+        if self.attribute_name:
+            return self.find_pdf_link_by_attribute()
+        else:
+            raise ValueError("attribute_name must be provided")
+
+    async def find_pdf_link_async(self) -> str:
+        """Async wrapper for finding PDF link."""
+        return await asyncio.to_thread(self.find_pdf_link)
+
+
+    def find_pdf_link_by_attribute(self) -> str:
+        """
+        Find PDF download link on the page by custom attribute.
+        
+        Returns:
+            str: Absolute URL of the PDF file
+            
+        Raises:
+            ValueError: If attribute or PDF link not found
+        """
+        try:
+            if not self.attribute_name:
+                raise ValueError("attribute_name is required for attribute search")
+
+            # Fetch the page
+            response = requests.get(self.page_url, headers=self.headers, timeout=10)
+            response.raise_for_status()
+            response.encoding = 'utf-8'
+            
+            # Parse HTML
+            soup = BeautifulSoup(response.content, 'html.parser')
+            
+            links = soup.find_all('a', attrs={self.attribute_name: True})
+
+            # Find all links with the specified attribute
+            for link in links:
+                href = link.get('href', '')
+                if href:
+                    # Convert relative URLs to absolute
+                    absolute_url = urljoin(self.page_url, href)
+                    return absolute_url
+            
+            raise ValueError(f"No link found with attribute {self.attribute_name}")
+            
+        except requests.RequestException as e:
+            raise ValueError(f"Failed to fetch page: {str(e)}")
+
+
+    def download_and_create_document(
+        self,
+        attribute_name: str = None,
+    ) -> PDFDocument:
+        """
+        Download PDF from found link and create a PDFDocument record.
+        
+        Args:
+            attribute_name: Optional override for attribute name
+            
+        Returns:
+            PDFDocument: Created document instance
+            
+        Raises:
+            ValueError: If download or creation fails
+        """
+        # Update search parameters if provided
+        if attribute_name:
+            self.attribute_name = attribute_name
+        
+        try:
+            # Find PDF link
+            pdf_url = self.find_pdf_link()
+            
+            # Download PDF file
+            response = requests.get(pdf_url, headers=self.headers, timeout=30)
+            response.raise_for_status()
+            
+            # Extract filename from URL
+            filename = pdf_url.split('/')[-1].split('?')[0]
+            if not filename.lower().endswith('.pdf'):
+                filename = f"{filename}.pdf"
+            
+            # Create PDFDocument
+            pdf_document = PDFDocument(
+                original_filename=filename,
+                scraped_url=self.page_url,
+                source_url=pdf_url,
+                status=PDFStatus.PENDING
+            )
+            
+            # Save the file
+            pdf_document.file.save(
+                filename,
+                ContentFile(response.content),
+                save=True
+            )
+            
+            return pdf_document
+            
+        except Exception as e:
+            raise ValueError(f"Failed to download and create document: {str(e)}")
+
+    async def download_and_create_document_async(
+        self,
+        attribute_name: str = None,
+    ) -> PDFDocument:
+        """Async wrapper for downloading PDF and creating a document."""
+        return await asyncio.to_thread(self.download_and_create_document, attribute_name)
 
 
 class PDFExtractor:
@@ -16,6 +164,18 @@ class PDFExtractor:
 
     def __init__(self, pdf_path: str):
         self.pdf_path = pdf_path
+
+    # def extract_text(self) -> List[Dict[str, Any]]:
+    #     """Extract plain text from all pages of the PDF."""
+    #     extracted_text = []
+    #     with pdfplumber.open(self.pdf_path) as pdf:
+    #         for page_num, page in enumerate(pdf.pages, start=1):
+    #             page_text = page.extract_text() or ''
+    #             extracted_text.append({
+    #                 'page_number': page_num,
+    #                 'content': page_text
+    #             })
+    #     return extracted_text
 
     def extract_tables(self) -> List[Dict[str, Any]]:
         """Extract largest table from all pages of the PDF."""
@@ -41,39 +201,21 @@ class PDFProcessor:
         self.pdf_document = pdf_document
 
     def process(self) -> None:
-        """Process the PDF document: extract text and tables."""
+        """Process the PDF document: validate and mark as processing."""
         try:
             # Update status to processing
             self.pdf_document.status = PDFStatus.PROCESSING
             self.pdf_document.save()
 
-            # Initialize extractor
+            # Basic validation - ensure file exists and is readable
             extractor = PDFExtractor(self.pdf_document.file.path)
-
-            # Extract text
-            text_data = extractor.extract_text()
-            for page_data in text_data:
-                ExtractedData.objects.create(
-                    pdf_document=self.pdf_document,
-                    data_type=DataType.TEXT,
-                    page_number=page_data['page_number'],
-                    raw_data={'content': page_data['content']}
-                )
-
-            # Extract tables
+            
+            # Verify we can extract tables (just check, don't store)
             table_data = extractor.extract_tables()
-            for table in table_data:
-                ExtractedData.objects.create(
-                    pdf_document=self.pdf_document,
-                    data_type=DataType.TABLE,
-                    page_number=table['page_number'],
-                    raw_data=table
-                )
+            if not table_data:
+                raise ValueError("No tables found in PDF document")
 
-            # Update status to completed
-            self.pdf_document.status = PDFStatus.COMPLETED
-            self.pdf_document.error_message = ''
-            self.pdf_document.save()
+            # Status will be updated to COMPLETED by the parser after successful parsing
 
         except Exception as e:
             # Update status to failed with error message
@@ -81,6 +223,10 @@ class PDFProcessor:
             self.pdf_document.error_message = str(e)
             self.pdf_document.save()
             raise
+
+    async def process_async(self) -> None:
+        """Async wrapper for processing PDF document."""
+        await asyncio.to_thread(self.process)
 
 
 class CroatianLaborPDFParser:
@@ -184,17 +330,6 @@ class CroatianLaborPDFParser:
         
         return companies
 
-    def _is_valid_oib(self, oib: str) -> bool:
-        """Check if the OIB is valid (should not be empty or just whitespace)."""
-        if not oib:
-            return False
-        
-        # Remove any whitespace and check if there's something left
-        oib_clean = oib.replace(' ', '').strip()
-        
-        # Just need to ensure it has some content (not all empty/whitespace)
-        return len(oib_clean) > 0
-
     def _clean_value(self, value: Any) -> str:
         """Clean and normalize cell values."""
         if value is None:
@@ -216,6 +351,12 @@ class CroatianLaborPDFParser:
             ExtractedData instance with structured company data
         """
         companies = self.parse_companies_table()
+
+        # Keep only the latest structured companies data for this PDF
+        ExtractedData.objects.filter(
+            pdf_document=self.pdf_document,
+            data_type=DataType.STRUCTURED_COMPANIES
+        ).delete()
         
         # Create ExtractedData record
         extracted_data = ExtractedData.objects.create(
@@ -230,6 +371,10 @@ class CroatianLaborPDFParser:
         )
         
         return extracted_data
+
+    async def process_and_save_async(self) -> ExtractedData:
+        """Async wrapper for parsing and saving structured data."""
+        return await asyncio.to_thread(self.process_and_save)
     
     def parse_companies_table_with_debug(self) -> Dict[str, Any]:
         """
@@ -262,7 +407,7 @@ class CroatianLaborPDFParser:
                 continue
             
             for row in rows:
-                row_values = list(row.values())
+                row_values = list(filter(None, row))
                 
                 if len(row_values) < 4:
                     filters['less_than_4_cols'] += 1
@@ -310,240 +455,6 @@ class CroatianLaborPDFParser:
             'filters_applied': filters,
             'total_rows_filtered': sum(filters.values())
         }
-
-
-class WebPDFScraper:
-    """Service class for scraping and downloading PDF files from web pages."""
-
-    def __init__(
-        self,
-        page_url: str,
-        search_text: str = None,
-        attribute_name: str = None,
-        attribute_value: str = None,
-        headers: Dict[str, str] = None
-    ):
-        """
-        Initialize the web scraper.
-        
-        Args:
-            page_url: URL of the page to scrape
-            search_text: Text to search for to locate the PDF link
-            attribute_name: Custom attribute name to search for (e.g., 'data-fileid')
-            attribute_value: Custom attribute value to search for
-            headers: Optional HTTP headers for the request
-        """
-        self.page_url = page_url
-        self.search_text = search_text
-        self.attribute_name = attribute_name
-        self.attribute_value = attribute_value
-        self.headers = headers or {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        }
-
-    def find_pdf_link(self) -> str:
-        """
-        Find PDF download link on the page using either text search or attribute search.
-        
-        Returns:
-            str: Absolute URL of the PDF file
-            
-        Raises:
-            ValueError: If link not found
-        """
-        if self.attribute_name:
-            return self.find_pdf_link_by_attribute()
-        elif self.search_text:
-            return self.find_pdf_link_by_text()
-        else:
-            raise ValueError("Either search_text or attribute_name must be provided")
-
-    def find_pdf_link_by_text(self) -> str:
-        """
-        Find PDF download link on the page near the specified search text.
-        
-        Returns:
-            str: Absolute URL of the PDF file
-            
-        Raises:
-            ValueError: If search text or PDF link not found
-        """
-        try:
-            # Fetch the page
-            response = requests.get(self.page_url, headers=self.headers, timeout=10)
-            response.raise_for_status()
-            response.encoding = 'utf-8'  # Ensure proper encoding for Croatian text
-            
-            # Parse HTML
-            soup = BeautifulSoup(response.content, 'html.parser')
-            
-            # Find the text element
-            text_element = None
-            for element in soup.find_all(['p', 'a', 'div', 'span', 'h2', 'h3', 'h4']):
-                if self.search_text.lower() in element.get_text().lower():
-                    text_element = element
-                    break
-            
-            if not text_element:
-                raise ValueError(f"Search text not found: {self.search_text}")
-            
-            # Look for PDF link near the found text
-            # Check in the same parent, next siblings, or nearby elements
-            pdf_link = self._find_pdf_link_in_vicinity(text_element)
-            
-            if not pdf_link:
-                raise ValueError("PDF link not found near the search text")
-            
-            # Convert relative URLs to absolute
-            absolute_url = urljoin(self.page_url, pdf_link)
-            return absolute_url
-            
-        except requests.RequestException as e:
-            raise ValueError(f"Failed to fetch page: {str(e)}")
-
-    def find_pdf_link_by_attribute(self) -> str:
-        """
-        Find PDF download link on the page by custom attribute.
-        
-        Returns:
-            str: Absolute URL of the PDF file
-            
-        Raises:
-            ValueError: If attribute or PDF link not found
-        """
-        try:
-            if not self.attribute_name:
-                raise ValueError("attribute_name is required for attribute search")
-
-            # Fetch the page
-            response = requests.get(self.page_url, headers=self.headers, timeout=10)
-            response.raise_for_status()
-            response.encoding = 'utf-8'
-            
-            # Parse HTML
-            soup = BeautifulSoup(response.content, 'html.parser')
-            
-            if self.attribute_value:
-                links = soup.find_all('a', attrs={self.attribute_name: self.attribute_value})
-            else:
-                links = soup.find_all('a', attrs={self.attribute_name: True})
-
-            # Find all links with the specified attribute
-            for link in links:
-                href = link.get('href', '')
-                if href:
-                    # Convert relative URLs to absolute
-                    absolute_url = urljoin(self.page_url, href)
-                    return absolute_url
-            
-            if self.attribute_value:
-                raise ValueError(
-                    f"No link found with {self.attribute_name}='{self.attribute_value}'"
-                )
-
-            raise ValueError(f"No link found with attribute {self.attribute_name}")
-            
-        except requests.RequestException as e:
-            raise ValueError(f"Failed to fetch page: {str(e)}")
-
-    def _find_pdf_link_in_vicinity(self, element) -> str:
-        """
-        Find PDF link in the vicinity of the given element.
-        Searches in: the element itself, parent, siblings, and nearby elements.
-        """
-        # Check the element itself and its children
-        for link in element.find_all('a', href=True):
-            href = link.get('href', '')
-            if href.lower().endswith('.pdf'):
-                return href
-        
-        # Check parent element
-        parent = element.parent
-        if parent:
-            for link in parent.find_all('a', href=True):
-                href = link.get('href', '')
-                if href.lower().endswith('.pdf'):
-                    return href
-        
-        # Check next siblings
-        sibling = element.find_next_sibling()
-        while sibling and sibling.name:
-            for link in sibling.find_all('a', href=True):
-                href = link.get('href', '')
-                if href.lower().endswith('.pdf'):
-                    return href
-            sibling = sibling.find_next_sibling()
-        
-        # Check previous siblings
-        sibling = element.find_previous_sibling()
-        while sibling and sibling.name:
-            for link in sibling.find_all('a', href=True):
-                href = link.get('href', '')
-                if href.lower().endswith('.pdf'):
-                    return href
-            sibling = sibling.find_previous_sibling()
-        
-        return None
-
-    def download_and_create_document(
-        self,
-        search_text: str = None,
-        attribute_name: str = None,
-        attribute_value: str = None
-    ) -> PDFDocument:
-        """
-        Download PDF from found link and create a PDFDocument record.
-        
-        Args:
-            search_text: Optional override for search text
-            attribute_name: Optional override for attribute name
-            attribute_value: Optional override for attribute value
-            
-        Returns:
-            PDFDocument: Created document instance
-            
-        Raises:
-            ValueError: If download or creation fails
-        """
-        # Update search parameters if provided
-        if search_text:
-            self.search_text = search_text
-        if attribute_name:
-            self.attribute_name = attribute_name
-        if attribute_value:
-            self.attribute_value = attribute_value
-        
-        try:
-            # Find PDF link
-            pdf_url = self.find_pdf_link()
-            
-            # Download PDF file
-            response = requests.get(pdf_url, headers=self.headers, timeout=30)
-            response.raise_for_status()
-            
-            # Extract filename from URL
-            filename = pdf_url.split('/')[-1].split('?')[0]
-            if not filename.lower().endswith('.pdf'):
-                filename = f"{filename}.pdf"
-            
-            # Create PDFDocument
-            pdf_document = PDFDocument(
-                original_filename=filename,
-                source_url=self.page_url,
-                status=PDFStatus.PENDING
-            )
-            
-            # Save the file
-            pdf_document.file.save(
-                filename,
-                ContentFile(response.content),
-                save=True
-            )
-            
-            return pdf_document
-            
-        except Exception as e:
-            raise ValueError(f"Failed to download and create document: {str(e)}")
 
 
 class CompanySyncService:
@@ -643,3 +554,131 @@ class CompanySyncService:
                 })
         
         return stats
+
+    async def sync_companies_async(self) -> Dict[str, Any]:
+        """Async wrapper for syncing companies."""
+        return await asyncio.to_thread(self.sync_companies)
+
+
+class PDFCronPipelineService:
+    """Single-flow service for cron execution: scrape, download, process, parse and sync."""
+
+    def __init__(
+        self,
+        page_url: str,
+        attribute_name: str,
+        headers: Optional[Dict[str, str]] = None,
+    ):
+        self.page_url = page_url
+        self.attribute_name = attribute_name
+        self.headers = headers
+
+    @classmethod
+    def run_once(
+        cls,
+        page_url: str,
+        attribute_name: str,
+        headers: Optional[Dict[str, str]] = None,
+    ) -> Dict[str, Any]:
+        return cls(
+            page_url=page_url,
+            attribute_name=attribute_name,
+            headers=headers,
+        ).run()
+
+    @classmethod
+    async def run_once_async(
+        cls,
+        page_url: str,
+        attribute_name: str,
+        headers: Optional[Dict[str, str]] = None,
+    ) -> Dict[str, Any]:
+        return await cls(
+            page_url=page_url,
+            attribute_name=attribute_name,
+            headers=headers,
+        ).run_async()
+
+    def run(self) -> Dict[str, Any]:
+        """Run complete pipeline in one operation."""
+        pdf_document = None
+
+        try:
+            scraper = WebPDFScraper(
+                page_url=self.page_url,
+                attribute_name=self.attribute_name,
+                headers=self.headers,
+            )
+            pdf_document = scraper.download_and_create_document()
+
+            processor = PDFProcessor(pdf_document)
+            processor.process()
+
+            parser = CroatianLaborPDFParser(pdf_document)
+            extracted_data = parser.process_and_save()
+
+            sync_service = CompanySyncService(pdf_document)
+            sync_stats = sync_service.sync_companies()
+
+            pdf_document.status = PDFStatus.COMPLETED
+            pdf_document.error_message = ''
+            pdf_document.save()
+
+            return {
+                'pdf_document_id': pdf_document.id,
+                'original_filename': pdf_document.original_filename,
+                'scraped_url': pdf_document.scraped_url,
+                'source_url': pdf_document.source_url,
+                'companies_extracted': extracted_data.raw_data.get('total_count', 0),
+                'sync': sync_stats,
+            }
+        except Exception as exc:
+            if pdf_document:
+                pdf_document.status = PDFStatus.FAILED
+                pdf_document.error_message = str(exc)
+                pdf_document.save()
+
+            logger.exception('PDF cron pipeline failed for page_url=%s', self.page_url)
+            raise
+
+    async def run_async(self) -> Dict[str, Any]:
+        """Run complete pipeline in one async operation."""
+        pdf_document = None
+
+        try:
+            scraper = WebPDFScraper(
+                page_url=self.page_url,
+                attribute_name=self.attribute_name,
+                headers=self.headers,
+            )
+            pdf_document = await scraper.download_and_create_document_async()
+
+            processor = PDFProcessor(pdf_document)
+            await processor.process_async()
+
+            parser = CroatianLaborPDFParser(pdf_document)
+            extracted_data = await parser.process_and_save_async()
+
+            sync_service = CompanySyncService(pdf_document)
+            sync_stats = await sync_service.sync_companies_async()
+
+            pdf_document.status = PDFStatus.COMPLETED
+            pdf_document.error_message = ''
+            await sync_to_async(pdf_document.save)()
+
+            return {
+                'pdf_document_id': pdf_document.id,
+                'original_filename': pdf_document.original_filename,
+                'scraped_url': pdf_document.scraped_url,
+                'source_url': pdf_document.source_url,
+                'companies_extracted': extracted_data.raw_data.get('total_count', 0),
+                'sync': sync_stats,
+            }
+        except Exception as exc:
+            if pdf_document:
+                pdf_document.status = PDFStatus.FAILED
+                pdf_document.error_message = str(exc)
+                await sync_to_async(pdf_document.save)()
+
+            logger.exception('Async PDF cron pipeline failed for page_url=%s', self.page_url)
+            raise
