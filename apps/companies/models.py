@@ -36,6 +36,7 @@ class Company(BaseModel):
     reviews_count = models.IntegerField(default=0, editable=False)
     blacklisted_at = models.DateTimeField(null=True, blank=True)
     last_blacklisted_at = models.DateTimeField(null=True, blank=True)
+    is_certified = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = "Companies"
@@ -46,7 +47,7 @@ class Company(BaseModel):
             self.display_name = clean_display_name(self.display_name)
         if not self.id_name:
             self.id_name = slugify(self.display_name + str(int(random()*10**12)))
-        super(Company, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def update_rating(self):
         reviews = self.reviews.all()

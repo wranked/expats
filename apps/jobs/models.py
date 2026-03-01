@@ -11,12 +11,12 @@ from .constants import (
 
 class Job(BaseModel):
     """
-
+    Model representing a job listing, including details about the position, company, and requirements.
     """
     title = models.CharField(max_length=100)
     description = models.TextField()
     expires_on = models.DateTimeField(null=True, blank=True)
-    hiring_type = models.CharField(max_length=100, choices=HiringType.choices, default=HiringType.EMPLOYEE)
+    hiring_type = models.CharField(max_length=100, choices=HiringType.choices, default=HiringType.REGULAR)
     hours = models.CharField(max_length=100, choices=JobHours.choices, default=JobHours.FULL_TIME)
     duration = models.CharField(max_length=100, choices=JobDuration.choices, default=JobDuration.SEASONAL)
     place = models.CharField(max_length=100, choices=JobPlace.choices, default=JobPlace.ON_SITE)

@@ -92,11 +92,13 @@ class CompanySerializer(serializers.ModelSerializer):
             "reviews_rating",
             "reviews_count",
             "blacklisted_at",
+            "is_certified"
         ]
         read_only_fields = [
             "reviews_rating",
             "reviews_count",
             "blacklisted_at",
+            "is_certified",
         ]
 
     def get_avatar_url(self, obj):
