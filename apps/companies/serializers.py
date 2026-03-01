@@ -71,9 +71,7 @@ class CompanySerializer(serializers.ModelSerializer):
     avatar_url = serializers.SerializerMethodField()
     primary_location = serializers.SerializerMethodField()
     branches = BranchSerializer(many=True, required=False)
-
     
-
     class Meta:
         model = Company
         fields = [
@@ -93,10 +91,12 @@ class CompanySerializer(serializers.ModelSerializer):
             # "admins",
             "reviews_rating",
             "reviews_count",
+            "blacklisted_at",
         ]
         read_only_fields = [
             "reviews_rating",
             "reviews_count",
+            "blacklisted_at",
         ]
 
     def get_avatar_url(self, obj):
