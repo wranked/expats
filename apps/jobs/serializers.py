@@ -52,6 +52,7 @@ class JobDetailsSerializer(serializers.ModelSerializer):
             "has_sponsorship",
             "has_accommodation",
             "has_meal",
+            "has_relocation",
             "location",
         ]
 

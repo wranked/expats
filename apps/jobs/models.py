@@ -23,6 +23,7 @@ class Job(BaseModel):
     has_sponsorship = models.BooleanField(default=False)
     has_accommodation = models.BooleanField(default=False)
     has_meal = models.BooleanField(default=False)
+    has_relocation = models.BooleanField(default=False)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="jobs")
     location = models.ForeignKey("locations.Location", on_delete=models.CASCADE, related_name="jobs", null=True, blank=True)
     # admin = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE, null=True, blank=True)
