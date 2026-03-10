@@ -26,7 +26,7 @@ class Company(BaseModel):
     legal_name = models.CharField(max_length=255, null=True, blank=True)
     legal_id = models.CharField(max_length=50, null=True, blank=True, help_text="Legal identification number (e.g., Croatian OIB)")
     url = models.URLField(null=True, blank=True)
-    description = models.CharField(max_length=1000, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     category = models.CharField(max_length=50, choices=CategoryTypes.choices)  # TODO: Change to industry?
     # picture = models.URLField(blank=True)
     avatar = CloudinaryField("avatar", null=True, blank=True)
