@@ -12,7 +12,7 @@ from .constants import AddressTypes, BusinessRegionTypes, LocationNameTypes, Sub
 
 class Country(BaseModel):
     name = models.CharField(max_length=100)
-    country_code = models.CharField(max_length=2)
+    country_code = models.CharField(max_length=2, unique=True)
     region = models.CharField(max_length=50, choices=RegionTypes.choices, null=True, blank=True)
     subregion = models.CharField(max_length=50, choices=SubRegionTypes.choices)
     business_region = models.CharField(max_length=50, choices=BusinessRegionTypes.choices)
