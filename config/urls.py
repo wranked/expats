@@ -22,6 +22,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 
 from apps.companies.routers import router, company_router
 from apps.blog.routers import blog_router
+from apps.common.admin_tools import commands_page
 from apps.jobs.routers import jobs_router
 from apps.reviews.routers import reviews_router
 
@@ -30,6 +31,7 @@ from apps.blog.urls import urlpatterns as blog_urlpatterns
 from apps.users.views import UserLogin, UserLogout, UserRegister, UserView
 
 urlpatterns = ([
+    path('admin/tools/commands/', admin.site.admin_view(commands_page), name='admin_commands_page'),
     path('admin/', admin.site.urls),
 
     path('', include(router.urls)),

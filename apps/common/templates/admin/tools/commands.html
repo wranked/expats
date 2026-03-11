@@ -1,0 +1,39 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div id="content-main">
+  <div class="module">
+    <h2>Available Commands</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Command</th>
+          <th>App</th>
+          <th>Description</th>
+          <th>Run</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cmd in commands %}
+        <tr>
+          <td><code>{{ cmd.name }}</code></td>
+          <td><code>{{ cmd.app_label }}</code></td>
+          <td>{{ cmd.description }}</td>
+          <td>
+            <form method="post" style="display: inline; margin: 0;">
+              {% csrf_token %}
+              <input type="hidden" name="command" value="{{ cmd.name }}">
+              <input type="submit" value="Run" class="default">
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4">No project management commands were discovered.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

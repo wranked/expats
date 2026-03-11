@@ -1,0 +1,19 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+<div class="module" style="margin-bottom: 1rem;">
+  <table>
+    <caption>Tools</caption>
+    <tbody>
+      <tr>
+        <th scope="row">
+          <a href="{% url 'admin_commands_page' %}">Commands</a>
+        </th>
+        <td>Open admin commands.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{{ block.super }}
+{% endblock %}
