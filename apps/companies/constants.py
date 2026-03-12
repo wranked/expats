@@ -8,4 +8,6 @@ class CategoryTypes(models.TextChoices):
     ACCOMMODATION = "Accommodation"
     GASTRONOMY = "Gastronomy"
     ENTERTAINMENT = "Entertainment"
+    CONSTRUCTION = "Construction"
+    NON_PROFIT_ORGANIZATION = "Non-profit Organization"
     OTHER = "Other"
