@@ -6,6 +6,8 @@ from .models import Review
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    is_public = serializers.BooleanField(write_only=True, default=False)
+
     class Meta:
         model = Review
         fields = [
@@ -20,8 +22,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         ]
 
     def to_representation(self, instance):
-        data = super(ReviewSerializer, self).to_representation(instance)
-        if data.get("is_public"):
+        data = super().to_representation(instance)
+        if instance.is_public:
             data["reviewer_display_name"] = instance.reviewer.display_name
             data["reviewer_email"] = instance.reviewer.email
             data["reviewer_avatar"] = instance.reviewer.picture
