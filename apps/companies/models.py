@@ -37,6 +37,8 @@ class Company(BaseModel):
     blacklisted_at = models.DateTimeField(null=True, blank=True)
     last_blacklisted_at = models.DateTimeField(null=True, blank=True)
     is_certified = models.BooleanField(default=False)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="created_companies")
+    approved_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Companies"

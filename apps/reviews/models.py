@@ -19,6 +19,7 @@ class Review(BaseModel):
     is_public = models.BooleanField(default=False)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="reviews")
     reviewer = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE, related_name="reviews")
+    approved_at = models.DateTimeField(null=True, blank=True)
 
     # def clean(self):
     #     if self.company_name and self.company:

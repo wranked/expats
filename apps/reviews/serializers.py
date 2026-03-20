@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.companies.serializers import CompanySerializer
+from apps.companies.models import Company
 
 from .models import Review
 
@@ -30,8 +30,15 @@ class ReviewSerializer(serializers.ModelSerializer):
         return data
 
 
+class ReviewCompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ["id", "display_name"]
+
+
 class MyReviewSerializer(serializers.ModelSerializer):
-    company = CompanySerializer(read_only=True)
+    company = ReviewCompanySerializer(read_only=True)
+    approved = serializers.SerializerMethodField()
 
     class Meta:
         model = Review
@@ -44,5 +51,9 @@ class MyReviewSerializer(serializers.ModelSerializer):
             "start_date",
             "end_date",
             "is_public",
+            "approved",
             "company",
         ]
+
+    def get_approved(self, obj):
+        return obj.approved_at is not None

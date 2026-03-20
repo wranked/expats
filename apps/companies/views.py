@@ -43,7 +43,15 @@ class CompanyViewSet(ModelViewSet):
 
     ordering_fields = ["reviews_rating", "-id"]
     ordering = ["-reviews_rating"]
-    http_method_names = ["head", "options", "get", "patch"]
+    http_method_names = ["head", "options", "get", "post", "patch"]
+
+    def get_permissions(self):
+        if self.action == "create":
+            return [IsAuthenticated()]
+        return [permission() for permission in self.permission_classes]
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
     @action(detail=False, methods=["get"], url_path="me")
     def my_companies(self, request, *args, **kwargs):
@@ -109,7 +117,10 @@ class CompanyReviewViewSet(ModelViewSet):
             company = Company.objects.get(id=company_id)
         except Company.DoesNotExist:
             raise NotFound()
-        return self.queryset.filter(company=company)
+        queryset = self.queryset.filter(company=company)
+        if self.action in ["list", "other_reviews"]:
+            return queryset.filter(approved_at__isnull=False)
+        return queryset
 
     def get_object(self):
         queryset = self.get_queryset()
@@ -117,7 +128,7 @@ class CompanyReviewViewSet(ModelViewSet):
         if review_id == "me":
             filters = dict(reviewer_id=self.request.user.id)
         else:
-            filters = dict(id=review_id)
+            filters = dict(id=review_id, approved_at__isnull=False)
         obj = get_object_or_404(queryset, **filters)
         self.check_object_permissions(self.request, obj)
         return obj

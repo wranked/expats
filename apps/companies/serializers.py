@@ -65,7 +65,6 @@ class BranchSerializer(serializers.ModelSerializer):
             "address",
         ]
 
-    
 
 class CompanySerializer(serializers.ModelSerializer):
     avatar_url = serializers.SerializerMethodField()

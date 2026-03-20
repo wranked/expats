@@ -1,4 +1,7 @@
 import pytest
+from rest_framework import status
+from rest_framework.test import APIClient
+from django.urls import reverse
 
 from .constants import CategoryTypes
 from .models import Branch, Company
@@ -20,6 +23,11 @@ def dummy_user():
 def dummy_user2():
     CustomUser.objects.create_user("user2@test.com", "password")
     return CustomUser.objects.get(email="user2@test.com")
+
+
+@pytest.fixture
+def api_client():
+    return APIClient()
 
 
 @pytest.fixture
@@ -183,3 +191,35 @@ def test_clean_display_name_case_insensitive():
     """Test that separator matching is case-insensitive."""
     result = clean_display_name("Company Name D.O.O. something")
     assert result == "Company Name"
+
+
+@pytest.mark.django_db
+def test_create_company_sets_created_by(api_client, dummy_user):
+    api_client.force_authenticate(user=dummy_user)
+
+    response = api_client.post(
+        reverse("company-list"),
+        {
+            "display_name": "Created By User",
+            "category": CategoryTypes.OTHER,
+        },
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_201_CREATED
+    company = Company.objects.get(id=response.data["id"])
+    assert company.created_by == dummy_user
+
+
+@pytest.mark.django_db
+def test_create_company_requires_authentication(api_client):
+    response = api_client.post(
+        reverse("company-list"),
+        {
+            "display_name": "Anonymous Company",
+            "category": CategoryTypes.OTHER,
+        },
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
