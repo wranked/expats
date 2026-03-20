@@ -28,7 +28,7 @@ class ReviewViewSet(ModelViewSet):
         """
         Endpoint para obtener todas las reviews del usuario autenticado.
         """
-        queryset = self.get_queryset().filter(reviewer_id=request.user.id)
+        queryset = self.get_queryset().filter(reviewer_id=request.user.id).order_by("-created_at")
 
         page = self.paginate_queryset(queryset)
         if page is not None:
