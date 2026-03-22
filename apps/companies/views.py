@@ -155,10 +155,16 @@ class CompanyReviewViewSet(ModelViewSet):
             company = Company.objects.get(id=company_id)
         except Company.DoesNotExist:
             raise NotFound()
+        # TODO: Move IP storage to a logger or a separate model to avoid storing
+        #  it in the review itself, which is not ideal for privacy reasons.
+        ip = self.request.META.get("HTTP_X_FORWARDED_FOR", self.request.META.get("REMOTE_ADDR"))
+        if ip and "," in ip:
+            ip = ip.split(",")[0].strip()
         try:
             serializer.save(
                 reviewer=self.request.user,
                 company=company,
+                reviewer_ip=ip,
             )
         except IntegrityError as exc:
             raise ConflictError("You have already submitted a review for this company.") from exc

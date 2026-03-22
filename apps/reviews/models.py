@@ -19,6 +19,7 @@ class Review(BaseModel):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="reviews")
     reviewer = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE, related_name="reviews")
     approved_at = models.DateTimeField(null=True, blank=True)
+    reviewer_ip = models.GenericIPAddressField(null=True, blank=True, editable=False)
 
     class Meta:
         constraints = [
