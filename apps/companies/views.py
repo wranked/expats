@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
@@ -5,7 +6,7 @@ from rest_framework import permissions
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import APIException, NotFound
 from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -21,6 +22,12 @@ from apps.jobs.models import Job
 from apps.jobs.serializers import JobSerializer, JobDetailsSerializer
 from apps.reviews.models import Review
 from apps.reviews.serializers import ReviewSerializer
+
+
+class ConflictError(APIException):
+    status_code = status.HTTP_409_CONFLICT
+    default_detail = "Request conflicts with the current state of the resource."
+    default_code = "conflict"
 
 
 class CompanyPagination(PageNumberPagination):
@@ -148,10 +155,13 @@ class CompanyReviewViewSet(ModelViewSet):
             company = Company.objects.get(id=company_id)
         except Company.DoesNotExist:
             raise NotFound()
-        serializer.save(
-            reviewer=self.request.user,
-            company=company,
-        )
+        try:
+            serializer.save(
+                reviewer=self.request.user,
+                company=company,
+            )
+        except IntegrityError as exc:
+            raise ConflictError("You have already submitted a review for this company.") from exc
 
     @action(detail=False, methods=["get"], url_path="others")
     def other_reviews(self, request, *args, **kwargs):

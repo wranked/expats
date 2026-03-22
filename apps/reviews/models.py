@@ -8,7 +8,6 @@ from .constants import SalaryCurrencyTypes, SalaryFrequencyTypes
 
 
 class Review(BaseModel):
-    # company_name = models.CharField(max_length=100, null=True, blank=True)
     rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     salary_range = models.IntegerField(null=True, blank=True)
     salary_currency = models.CharField(max_length=50, choices=SalaryCurrencyTypes.choices, default=SalaryCurrencyTypes.USD)
@@ -21,14 +20,35 @@ class Review(BaseModel):
     reviewer = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE, related_name="reviews")
     approved_at = models.DateTimeField(null=True, blank=True)
 
-    # def clean(self):
-    #     if self.company_name and self.company:
-    #         raise ValidationError("Company name AND Company not allowed")
-
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['company', 'reviewer'], name="unique_reviewer_per_company"),
         ]
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            previous = Review.objects.filter(pk=self.pk).values(
+                "rating",
+                "salary_range",
+                "salary_currency",
+                "salary_frequency",
+                "comment",
+                "start_date",
+                "end_date",
+                "is_public",
+                "company_id",
+                "reviewer_id",
+            ).first()
+
+            if previous:
+                content_changed = any(
+                    getattr(self, field) != previous[field]
+                    for field in previous
+                )
+                if content_changed:
+                    self.approved_at = None
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return " - ".join([self.company.display_name, (self.reviewer.display_name or "Anonymous")])
