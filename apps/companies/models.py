@@ -52,7 +52,7 @@ class Company(BaseModel):
         super().save(*args, **kwargs)
 
     def update_rating(self):
-        reviews = self.reviews.all()
+        reviews = self.reviews.filter(approved_at__isnull=False)
         total_reviews = reviews.count()
 
         if total_reviews > 0:
@@ -65,7 +65,7 @@ class Company(BaseModel):
         self.save()
 
     @property
-    def rating_summary(self):
+    def rating_summary(self):  # TODO: Cache this value and update it when reviews are created/updated/deleted
         reviews = self.reviews
         result = {
             1: 0,
@@ -73,15 +73,9 @@ class Company(BaseModel):
             3: 0,
             4: 0,
             5: 0,
-            # "count": self.reviews.count(),
-            # "media": None,
         }
-        # total = 0
-        for review in reviews.all():
-            # total += review.rating
+        for review in reviews.filter(approved_at__isnull=False):
             result[review.rating] += 1
-        # if self.reviews.count():
-        #     result["media"] = total/self.reviews.count()
         return result
 
     def __str__(self):
