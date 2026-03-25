@@ -4,6 +4,7 @@ from django.core.management import call_command, get_commands, load_command_clas
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
+import shlex
 
 
 def _discover_project_commands():
@@ -39,16 +40,48 @@ def _discover_project_commands():
     return commands
 
 
+def _command_accepts_option(app_label, command_name, option):
+    """Return True when a management command defines a specific CLI option."""
+    try:
+        command = load_command_class(app_label, command_name)
+        parser = command.create_parser("manage.py", command_name)
+    except Exception:
+        return False
+
+    option_strings = {
+        opt
+        for action in parser._actions
+        for opt in action.option_strings
+    }
+    return option in option_strings
+
+
 def commands_page(request):
     discovered_commands = _discover_project_commands()
     discovered_command_names = {command["name"] for command in discovered_commands}
+    command_app_map = {command["name"]: command["app_label"] for command in discovered_commands}
 
     if request.method == "POST":
         command_name = request.POST.get("command")
+        raw_args = (request.POST.get("command_args") or "").strip()
 
         if command_name in discovered_command_names:
             try:
-                call_command(command_name)
+                parsed_args = shlex.split(raw_args) if raw_args else []
+
+                # Auto-pass the logged-in admin email when supported by the command.
+                if request.user.is_authenticated:
+                    app_label = command_app_map.get(command_name)
+                    has_executed_by_option = _command_accepts_option(
+                        app_label,
+                        command_name,
+                        "--executed-by-email",
+                    )
+                    already_has_executed_by = "--executed-by-email" in parsed_args
+                    if has_executed_by_option and not already_has_executed_by:
+                        parsed_args.extend(["--executed-by-email", request.user.email])
+
+                call_command(command_name, *parsed_args)
             except Exception as exc:
                 messages.error(request, f"Failed to run '{command_name}': {exc}")
             else:

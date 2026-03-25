@@ -11,3 +11,11 @@ class CategoryTypes(models.TextChoices):
     CONSTRUCTION = "Construction"
     NON_PROFIT_ORGANIZATION = "Non-profit Organization"
     OTHER = "Other"
+
+
+class CreatedViaTypes(models.TextChoices):
+    USER = "USER", "User"
+    SCRIPT = "SCRIPT", "Script"
+    IMPORT = "IMPORT", "Import"
+    ADMIN = "ADMIN", "Admin"
+    API = "API", "API"

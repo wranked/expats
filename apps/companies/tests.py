@@ -209,6 +209,7 @@ def test_create_company_sets_created_by(api_client, dummy_user):
     assert response.status_code == status.HTTP_201_CREATED
     company = Company.objects.get(id=response.data["id"])
     assert company.created_by == dummy_user
+    assert company.created_via == "API"
 
 
 @pytest.mark.django_db

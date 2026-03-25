@@ -10,6 +10,7 @@
           <th>Command</th>
           <th>App</th>
           <th>Description</th>
+          <th>Arguments</th>
           <th>Run</th>
         </tr>
       </thead>
@@ -23,13 +24,21 @@
             <form method="post" style="display: inline; margin: 0;">
               {% csrf_token %}
               <input type="hidden" name="command" value="{{ cmd.name }}">
+              <input
+                type="text"
+                name="command_args"
+                placeholder="--option value"
+                style="min-width: 280px;"
+              >
+          </td>
+          <td>
               <input type="submit" value="Run" class="default">
             </form>
           </td>
         </tr>
         {% empty %}
         <tr>
-          <td colspan="4">No project management commands were discovered.</td>
+          <td colspan="5">No project management commands were discovered.</td>
         </tr>
         {% endfor %}
       </tbody>

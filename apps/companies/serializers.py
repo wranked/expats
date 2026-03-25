@@ -81,19 +81,20 @@ class CompanySerializer(serializers.ModelSerializer):
             "url",
             "description",
             "category",
-            # "picture",
             "avatar",
             "avatar_url",
             "rating_summary",
             "primary_location",
             "branches",
-            # "admins",
             "reviews_rating",
             "reviews_count",
             "blacklisted_at",
             "is_certified"
         ]
         read_only_fields = [
+            "id",
+            "rating_summary",
+            "primary_location",
             "reviews_rating",
             "reviews_count",
             "blacklisted_at",
@@ -109,12 +110,18 @@ class CompanySerializer(serializers.ModelSerializer):
         branch = obj.branches.filter(is_primary=True).first()
         return str(branch.location) if branch else None
 
-    # def get_admins(self, obj):
-    #     user = self.context["request"].user
-    #     print("User:", user)
-    #     if user.is_superuser or CompanyAdmin.objects.filter(user=user, company=obj).exists():
-    #         return CompanyAdminSerializer(obj.admins.all(), many=True).data
-    #     return []
+
+class CreateCompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = [
+            "display_name",
+            "legal_name",
+            "legal_id",
+            "url",
+            "country",
+            "category",
+        ]
 
 
 class CompanyAdminSerializer(serializers.ModelSerializer):
@@ -132,8 +139,7 @@ class CompanyAdminSerializer(serializers.ModelSerializer):
             ]
 
 
-
-class CompanyManageSerializer(serializers.ModelSerializer):
+class ManageCompanySerializer(serializers.ModelSerializer):
     
     avatar_url = serializers.SerializerMethodField()
     branches = BranchSerializer(many=True, required=False)
@@ -171,23 +177,3 @@ class CompanyManageSerializer(serializers.ModelSerializer):
             instance.locations.set(validated_data.pop("locations"))
 
         return super().update(instance, validated_data)
-
-
-# class MyReviewSerializer(serializers.ModelSerializer):
-#     company = CompanySerializer(read_only=True)
-
-#     class Meta:
-#         model = Review
-#         fields = [
-#             "id",
-#             "created_at",
-#             "modified_at",
-#             "rating",
-#             "comment",
-#             "start_date",
-#             "end_date",
-#             "is_public",
-#             "company",
-#         ]
-
-

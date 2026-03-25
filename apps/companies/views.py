@@ -14,9 +14,10 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from .filters import CompanyFilter
+from .constants import CreatedViaTypes
 from .models import Company, CompanyAdmin
 from .permissions import IsCompanyAdmin, IsSuperAdmin
-from .serializers import CompanySerializer, CompanyManageSerializer
+from .serializers import CompanySerializer, ManageCompanySerializer
 
 from apps.jobs.models import Job
 from apps.jobs.serializers import JobSerializer, JobDetailsSerializer
@@ -58,7 +59,7 @@ class CompanyViewSet(ModelViewSet):
         return [permission() for permission in self.permission_classes]
 
     def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
+        serializer.save(created_by=self.request.user, created_via=CreatedViaTypes.API)
 
     @action(detail=False, methods=["get"], url_path="me")
     def my_companies(self, request, *args, **kwargs):
@@ -86,11 +87,11 @@ class CompanyViewSet(ModelViewSet):
             if not CompanyAdmin.objects.filter(company=company, user=request.user).exists():
                 return Response({"detail": "You do not have permission to access this."}, status=403)
 
-            serializer = CompanyManageSerializer(company)
+            serializer = ManageCompanySerializer(company)
             return Response(serializer.data)
         
         if request.method == "PATCH":
-            serializer = CompanyManageSerializer(company, data=request.data, partial=True)
+            serializer = ManageCompanySerializer(company, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
@@ -222,14 +223,14 @@ class CompanyJobViewSet(ModelViewSet):
         )
 
 
-# class CompanyManageViewSet(ModelViewSet):
+# class ManageCompanyViewSet(ModelViewSet):
 #     """
 #     ViewSet to manage company administrators.
 #     Only company admins can see their own company admins, 
 #     and super admins can see all.
 #     """
 #     queryset = Company.objects.all()
-#     serializer_class = CompanyManageSerializer
+#     serializer_class = ManageCompanySerializer
 #     permission_classes = [permissions.IsAuthenticated]
 
 #     def get_permissions(self):

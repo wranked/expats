@@ -7,6 +7,7 @@ from .constants import PDFStatus, DataType
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
 from django.utils import timezone
 import logging
@@ -480,7 +481,7 @@ class CompanySyncService:
             company.blacklisted_at = None
             company.save()
 
-    def sync_companies(self) -> Dict[str, Any]:
+    def sync_companies(self, created_by_user=None) -> Dict[str, Any]:
         """
         Synchronize companies from PDF to Company app.
         
@@ -492,6 +493,7 @@ class CompanySyncService:
             Dictionary with sync statistics
         """
         from apps.companies.models import Company
+        from apps.companies.constants import CreatedViaTypes
         
         # Reset blacklist status before syncing
         self.reset_blacklist_status()
@@ -539,9 +541,12 @@ class CompanySyncService:
                     legal_name=legal_name,
                     display_name=legal_name,  # Use legal_name as display_name initially
                     legal_id=legal_id,
-                    category='OTHER',  # Default category, can be updated later
-                    description=f"Imported from PDF. Address: {address}" if address else "Imported from PDF",
+                    category='Other',  # Default category, can be updated later
+                    description="Imported from PDF.",
+                    address=address,
                     blacklisted_at=timezone.now(),
+                    created_by=created_by_user,
+                    created_via=CreatedViaTypes.SCRIPT,
                 )
                 
                 stats['created'] += 1
@@ -555,9 +560,9 @@ class CompanySyncService:
         
         return stats
 
-    async def sync_companies_async(self) -> Dict[str, Any]:
+    async def sync_companies_async(self, created_by_user=None) -> Dict[str, Any]:
         """Async wrapper for syncing companies."""
-        return await asyncio.to_thread(self.sync_companies)
+        return await asyncio.to_thread(self.sync_companies, created_by_user)
 
 
 class PDFCronPipelineService:
@@ -568,10 +573,12 @@ class PDFCronPipelineService:
         page_url: str,
         attribute_name: str,
         headers: Optional[Dict[str, str]] = None,
+        executed_by_email: Optional[str] = None,
     ):
         self.page_url = page_url
         self.attribute_name = attribute_name
         self.headers = headers
+        self.executed_by_email = executed_by_email
 
     @classmethod
     def run_once(
@@ -579,11 +586,13 @@ class PDFCronPipelineService:
         page_url: str,
         attribute_name: str,
         headers: Optional[Dict[str, str]] = None,
+        executed_by_email: Optional[str] = None,
     ) -> Dict[str, Any]:
         return cls(
             page_url=page_url,
             attribute_name=attribute_name,
             headers=headers,
+            executed_by_email=executed_by_email,
         ).run()
 
     @classmethod
@@ -592,16 +601,36 @@ class PDFCronPipelineService:
         page_url: str,
         attribute_name: str,
         headers: Optional[Dict[str, str]] = None,
+        executed_by_email: Optional[str] = None,
     ) -> Dict[str, Any]:
         return await cls(
             page_url=page_url,
             attribute_name=attribute_name,
             headers=headers,
+            executed_by_email=executed_by_email,
         ).run_async()
+
+    def _get_execution_user(self):
+        User = get_user_model()
+        email = self.executed_by_email or "cron_job@system"
+        existing_user = User.objects.filter(email=email).first()
+        if existing_user:
+            return existing_user
+
+        if email == "cron_job@system":
+            return User.objects.create_user(
+                email=email,
+                password=None,
+                first_name="Cron",
+                last_name="Job",
+            )
+
+        return User.objects.create_user(email=email, password=None)
 
     def run(self) -> Dict[str, Any]:
         """Run complete pipeline in one operation."""
         pdf_document = None
+        execution_user = self._get_execution_user()
 
         try:
             scraper = WebPDFScraper(
@@ -618,7 +647,7 @@ class PDFCronPipelineService:
             extracted_data = parser.process_and_save()
 
             sync_service = CompanySyncService(pdf_document)
-            sync_stats = sync_service.sync_companies()
+            sync_stats = sync_service.sync_companies(created_by_user=execution_user)
 
             pdf_document.status = PDFStatus.COMPLETED
             pdf_document.error_message = ''
@@ -644,6 +673,7 @@ class PDFCronPipelineService:
     async def run_async(self) -> Dict[str, Any]:
         """Run complete pipeline in one async operation."""
         pdf_document = None
+        execution_user = await sync_to_async(self._get_execution_user)()
 
         try:
             scraper = WebPDFScraper(
@@ -660,7 +690,7 @@ class PDFCronPipelineService:
             extracted_data = await parser.process_and_save_async()
 
             sync_service = CompanySyncService(pdf_document)
-            sync_stats = await sync_service.sync_companies_async()
+            sync_stats = await sync_service.sync_companies_async(created_by_user=execution_user)
 
             pdf_document.status = PDFStatus.COMPLETED
             pdf_document.error_message = ''

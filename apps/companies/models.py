@@ -10,7 +10,7 @@ from django.utils import timezone
 
 from apps.common.models import BaseModel
 
-from .constants import CategoryTypes
+from .constants import CategoryTypes, CreatedViaTypes
 from .utils import clean_display_name
 
 
@@ -24,21 +24,22 @@ class Company(BaseModel):
     display_name = models.CharField(max_length=255, null=True, blank=True)
     id_name = models.CharField(max_length=255, unique=True, validators=[name_validator], null=True, blank=True)
     legal_name = models.CharField(max_length=255, null=True, blank=True)
-    legal_id = models.CharField(max_length=50, null=True, blank=True, help_text="Legal identification number (e.g., Croatian OIB)")
+    legal_id = models.CharField(max_length=50, null=True, blank=True, help_text="Legal identification number")
+    legal_id_type = models.CharField(max_length=50, null=True, blank=True, help_text="Type of legal identification (e.g., OIB, EIN)")
     url = models.URLField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     category = models.CharField(max_length=50, choices=CategoryTypes.choices)  # TODO: Change to industry?
-    # picture = models.URLField(blank=True)
     avatar = CloudinaryField("avatar", null=True, blank=True)
-    # admin = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE, null=True, blank=True)
-    # locations = models.ManyToManyField("locations.Location", through="Branch", related_name="companies", blank=True)
     reviews_rating = models.FloatField(default=0, editable=False)
     reviews_count = models.IntegerField(default=0, editable=False)
     blacklisted_at = models.DateTimeField(null=True, blank=True)
     last_blacklisted_at = models.DateTimeField(null=True, blank=True)
     is_certified = models.BooleanField(default=False)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="created_companies")
     approved_at = models.DateTimeField(null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    country = models.ForeignKey("locations.Country", on_delete=models.SET_NULL, null=True, blank=True, related_name="companies")
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="created_companies")
+    created_via = models.CharField(max_length=20, choices=CreatedViaTypes.choices, default=CreatedViaTypes.API)
 
     class Meta:
         verbose_name_plural = "Companies"

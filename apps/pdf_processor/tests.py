@@ -77,7 +77,7 @@ def test_pdf_cron_pipeline_service_success(monkeypatch):
         def __init__(self, pdf_document):
             self.pdf_document = pdf_document
 
-        def sync_companies(self):
+        def sync_companies(self, created_by_user=None):
             return {
                 'total_pdf_companies': 1,
                 'updated': 0,
@@ -197,7 +197,7 @@ def test_pdf_cron_pipeline_service_run_once_async_success(monkeypatch):
         def __init__(self, pdf_document):
             self.pdf_document = pdf_document
 
-        def sync_companies(self):
+        def sync_companies(self, created_by_user=None):
             return {
                 'total_pdf_companies': 1,
                 'updated': 0,
