@@ -37,8 +37,6 @@ class Review(BaseModel):
                 "start_date",
                 "end_date",
                 "is_public",
-                # "company_id",
-                # "reviewer_id",
             ).first()
 
             if previous:

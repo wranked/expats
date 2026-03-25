@@ -5,8 +5,16 @@ from apps.companies.models import Company
 from .models import Review
 
 
+class ReviewerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review.reviewer.field.related_model
+        fields = ["display_name", "email", "picture"]
+
+
 class ReviewSerializer(serializers.ModelSerializer):
     is_public = serializers.BooleanField(write_only=True, default=False)
+    is_approved = serializers.SerializerMethodField()
+    reviewer = serializers.SerializerMethodField()
 
     class Meta:
         model = Review
@@ -19,15 +27,17 @@ class ReviewSerializer(serializers.ModelSerializer):
             "start_date",
             "end_date",
             "is_public",
+            "is_approved",
+            "reviewer",
         ]
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        if instance.is_public:
-            data["reviewer_display_name"] = instance.reviewer.display_name
-            data["reviewer_email"] = instance.reviewer.email
-            data["reviewer_avatar"] = instance.reviewer.picture
-        return data
+    def get_is_approved(self, obj):
+        return obj.approved_at is not None
+
+    def get_reviewer(self, obj):
+        if obj.is_public:
+            return ReviewerSerializer(obj.reviewer).data
+        return None
 
 
 class ReviewCompanySerializer(serializers.ModelSerializer):
@@ -38,7 +48,7 @@ class ReviewCompanySerializer(serializers.ModelSerializer):
 
 class MyReviewSerializer(serializers.ModelSerializer):
     company = ReviewCompanySerializer(read_only=True)
-    approved = serializers.SerializerMethodField()
+    is_approved = serializers.SerializerMethodField()
 
     class Meta:
         model = Review
@@ -51,9 +61,9 @@ class MyReviewSerializer(serializers.ModelSerializer):
             "start_date",
             "end_date",
             "is_public",
-            "approved",
+            "is_approved",
             "company",
         ]
 
-    def get_approved(self, obj):
+    def get_is_approved(self, obj):
         return obj.approved_at is not None
