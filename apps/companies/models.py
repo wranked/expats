@@ -32,6 +32,7 @@ class Company(BaseModel):
     avatar = CloudinaryField("avatar", null=True, blank=True)
     reviews_rating = models.FloatField(default=0, editable=False)
     reviews_count = models.IntegerField(default=0, editable=False)
+    rating_summary = models.JSONField(default=dict, editable=False)
     blacklisted_at = models.DateTimeField(null=True, blank=True)
     last_blacklisted_at = models.DateTimeField(null=True, blank=True)
     is_certified = models.BooleanField(default=False)
@@ -55,29 +56,26 @@ class Company(BaseModel):
     def update_rating(self):
         reviews = self.reviews.filter(approved_at__isnull=False)
         total_reviews = reviews.count()
-
-        if total_reviews > 0:
-            self.reviews_rating = sum(review.rating for review in reviews) / total_reviews
-            self.reviews_count = total_reviews
-        else:
-            self.reviews_rating = 0
-            self.reviews_count = 0
-
-        self.save()
-
-    @property
-    def rating_summary(self):  # TODO: Cache this value and update it when reviews are created/updated/deleted
-        reviews = self.reviews
-        result = {
+        summary = {
             1: 0,
             2: 0,
             3: 0,
             4: 0,
             5: 0,
         }
-        for review in reviews.filter(approved_at__isnull=False):
-            result[review.rating] += 1
-        return result
+
+        for review in reviews:
+            summary[review.rating] += 1
+
+        if total_reviews > 0:
+            self.reviews_rating = sum(review.rating for review in reviews) / total_reviews
+        else:
+            self.reviews_rating = 0
+
+        self.reviews_count = total_reviews
+        self.rating_summary = summary
+
+        self.save()
 
     def __str__(self):
         return self.display_name
