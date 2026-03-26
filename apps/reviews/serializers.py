@@ -24,6 +24,10 @@ class ReviewSerializer(serializers.ModelSerializer):
             "modified_at",
             "rating",
             "comment",
+            "salary_range",
+            "salary_currency",
+            # "salary_frequency",
+            "position",
             "start_date",
             "end_date",
             "is_public",
@@ -46,7 +50,7 @@ class ReviewCompanySerializer(serializers.ModelSerializer):
         fields = ["id", "display_name"]
 
 
-class MyReviewSerializer(serializers.ModelSerializer):
+class ContributionSerializer(serializers.ModelSerializer):
     company = ReviewCompanySerializer(read_only=True)
     is_approved = serializers.SerializerMethodField()
 
@@ -57,6 +61,10 @@ class MyReviewSerializer(serializers.ModelSerializer):
             "created_at",
             "modified_at",
             "rating",
+            "salary_range",
+            "salary_currency",
+            "salary_frequency",
+            "position",
             "comment",
             "start_date",
             "end_date",

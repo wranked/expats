@@ -12,6 +12,7 @@ class Review(BaseModel):
     salary_range = models.IntegerField(null=True, blank=True)
     salary_currency = models.CharField(max_length=50, choices=SalaryCurrencyTypes.choices, default=SalaryCurrencyTypes.USD)
     salary_frequency = models.CharField(max_length=50, choices=SalaryFrequencyTypes.choices, default=SalaryFrequencyTypes.MONTHLY)
+    position = models.CharField(max_length=255, null=True, blank=True)
     comment = models.TextField()
     start_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
@@ -33,6 +34,7 @@ class Review(BaseModel):
                 "salary_range",
                 "salary_currency",
                 "salary_frequency",
+                "position",
                 "comment",
                 "start_date",
                 "end_date",

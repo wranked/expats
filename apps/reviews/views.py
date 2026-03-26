@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from .models import Review
-from .serializers import MyReviewSerializer
+from .serializers import ContributionSerializer
 
 
 
@@ -20,13 +20,13 @@ class ReviewViewSet(ModelViewSet):
     """
     permission_classes = (AllowAny,)
     queryset = Review.objects.all()
-    serializer_class = MyReviewSerializer
+    serializer_class = ContributionSerializer
     pagination_class = ReviewPagination
     
     @action(detail=False, methods=["get"], url_path="me")
     def my_reviews(self, request, *args, **kwargs):
         """
-        Endpoint para obtener todas las reviews del usuario autenticado.
+        Endpoint to retrieve reviews created by the authenticated user.
         """
         queryset = self.get_queryset().filter(reviewer_id=request.user.id).order_by("-created_at")
 

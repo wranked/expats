@@ -170,6 +170,16 @@ class CompanyReviewViewSet(ModelViewSet):
         except IntegrityError as exc:
             raise ConflictError("You have already submitted a review for this company.") from exc
 
+    def partial_update(self, request, *args, **kwargs):
+        review = self.get_object()
+        if review.reviewer_id != request.user.id:
+            return Response({"detail": "You can only edit your own review."}, status=status.HTTP_403_FORBIDDEN)
+
+        serializer = self.get_serializer(review, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
     @action(detail=False, methods=["get"], url_path="others")
     def other_reviews(self, request, *args, **kwargs):
         queryset = self.get_queryset().exclude(reviewer_id=self.request.user.id)
