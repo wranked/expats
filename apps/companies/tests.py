@@ -4,7 +4,7 @@ from rest_framework.test import APIClient
 from django.urls import reverse
 
 from .constants import CategoryTypes
-from .models import Branch, Company
+from .models import Branch, Company, CompanyAdmin
 from .utils import clean_display_name
 from apps.reviews.models import Review
 from apps.users.models import CustomUser
@@ -224,3 +224,58 @@ def test_create_company_requires_authentication(api_client):
     )
 
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+
+@pytest.mark.django_db
+def test_related_companies_are_bidirectional():
+    company_a = Company.objects.create(
+        display_name="Company A",
+        id_name="company-a",
+        category=CategoryTypes.OTHER,
+    )
+    company_b = Company.objects.create(
+        display_name="Company B",
+        id_name="company-b",
+        category=CategoryTypes.OTHER,
+    )
+
+    company_a.related_companies.add(company_b)
+
+    assert company_b in company_a.related_companies.all()
+    assert company_a in company_b.related_companies.all()
+
+
+@pytest.mark.django_db
+def test_company_admin_can_update_related_companies(api_client, dummy_user):
+    api_client.force_authenticate(user=dummy_user)
+
+    main_company = Company.objects.create(
+        display_name="Main Co",
+        id_name="main-co",
+        category=CategoryTypes.OTHER,
+    )
+    related_company = Company.objects.create(
+        display_name="Related Co",
+        id_name="related-co",
+        category=CategoryTypes.OTHER,
+    )
+    CompanyAdmin.objects.create(
+        company=main_company,
+        user=dummy_user,
+        role=CompanyAdmin.SUPERADMIN,
+    )
+
+    response = api_client.patch(
+        reverse("company-admin", args=[main_company.id]),
+        {
+            "related_company_ids": [related_company.id],
+        },
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+
+    main_company.refresh_from_db()
+    related_company.refresh_from_db()
+    assert related_company in main_company.related_companies.all()
+    assert main_company in related_company.related_companies.all()

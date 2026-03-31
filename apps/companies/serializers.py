@@ -66,10 +66,28 @@ class BranchSerializer(serializers.ModelSerializer):
         ]
 
 
+class RelatedCompanySerializer(serializers.ModelSerializer):
+    avatar_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Company
+        fields = [
+            "id",
+            "display_name",
+            "avatar_url",
+        ]
+
+    def get_avatar_url(self, obj):
+        if obj.avatar:
+            return cloudinary.utils.cloudinary_url(obj.avatar.url)[0]
+        return None
+
+
 class CompanySerializer(serializers.ModelSerializer):
     avatar_url = serializers.SerializerMethodField()
     primary_location = serializers.SerializerMethodField()
     branches = BranchSerializer(many=True, required=False)
+    related_companies = RelatedCompanySerializer(many=True, read_only=True)
     
     class Meta:
         model = Company
@@ -86,6 +104,7 @@ class CompanySerializer(serializers.ModelSerializer):
             "rating_summary",
             "primary_location",
             "branches",
+            "related_companies",
             "reviews_rating",
             "reviews_count",
             "blacklisted_at",
@@ -143,6 +162,13 @@ class ManageCompanySerializer(serializers.ModelSerializer):
     
     avatar_url = serializers.SerializerMethodField()
     branches = BranchSerializer(many=True, required=False)
+    related_companies = RelatedCompanySerializer(many=True, read_only=True)
+    related_company_ids = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Company.objects.all(),
+        source="related_companies",
+        required=False,
+    )
     
     admins = CompanyAdminSerializer(many=True)
 
@@ -161,6 +187,8 @@ class ManageCompanySerializer(serializers.ModelSerializer):
             "avatar_url",
             # "rating_summary",
             "branches",
+            "related_companies",
+            "related_company_ids",
             "admins",
         ]
 

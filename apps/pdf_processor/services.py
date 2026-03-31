@@ -543,7 +543,7 @@ class CompanySyncService:
                     legal_id=legal_id,
                     category='Other',  # Default category, can be updated later
                     description="Imported from PDF.",
-                    address=address,
+                    raw_address=address,
                     blacklisted_at=timezone.now(),
                     created_by=created_by_user,
                     created_via=CreatedViaTypes.SCRIPT,

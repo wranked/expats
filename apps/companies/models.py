@@ -37,10 +37,11 @@ class Company(BaseModel):
     last_blacklisted_at = models.DateTimeField(null=True, blank=True)
     is_certified = models.BooleanField(default=False)
     approved_at = models.DateTimeField(null=True, blank=True)
-    address = models.CharField(max_length=255, null=True, blank=True)
+    raw_address = models.CharField(max_length=255, null=True, blank=True)
     country = models.ForeignKey("locations.Country", on_delete=models.SET_NULL, null=True, blank=True, related_name="companies")
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="created_companies")
     created_via = models.CharField(max_length=20, choices=CreatedViaTypes.choices, default=CreatedViaTypes.API)
+    related_companies = models.ManyToManyField("self", blank=True)
 
     class Meta:
         verbose_name_plural = "Companies"
