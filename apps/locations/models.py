@@ -24,30 +24,6 @@ class Country(BaseModel):
         return f"{self.name} ({self.country_code})"
 
 
-# class Location(BaseModel):
-#     """Location model to store the location of a company or user"""
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     name = models.CharField(max_length=100, null=True, blank=True)
-#     country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name="locations")
-#     location_type = models.CharField(max_length=100, choices=LocationNameTypes.choices, default=LocationNameTypes.CITY)
-
-    # postal_code = models.CharField(max_length=100, null=True, blank=True)
-    # admin_level_1 = models.CharField(max_length=100, null=True, blank=True)
-    # admin_level_2 = models.CharField(max_length=100, null=True, blank=True)
-    # admin_level_3 = models.CharField(max_length=100, null=True, blank=True)
-    # admin_level_4 = models.CharField(max_length=100, null=True, blank=True)
-    # admin_level_5 = models.CharField(max_length=100, null=True, blank=True)
-
-    # def __str__(self):
-    #     return ", ".join(filter(None, [
-    #         self.admin_level_5,
-    #         self.admin_level_4,
-    #         self.admin_level_3,
-    #         self.admin_level_2,
-    #         self.admin_level_1,
-    #         self.country.name
-    #     ]))
-
 class Location(BaseModel):
     """ Location model to store the location of a company or user """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -71,6 +47,7 @@ class Location(BaseModel):
             parent = parent.parent
         parts.append(self.country.name)
         return ", ".join(filter(None, parts))
+
 
 class Address(BaseModel):
     name = models.CharField(max_length=100, null=True, blank=True)
@@ -108,18 +85,6 @@ class Address(BaseModel):
         if location:
             return location.latitude, location.longitude
         return None, None
-
-        # GOOGLE_MAPS_API_KEY = "AIzaSyDmm12sorDfX8xsYOei0qUDY-Ld86jIZGE"  # settings.GOOGLE_MAPS_API_KEY
-        # address = f"{self.street} {self.number}, {self.postal_code}, {self.location}"
-        # url = f"https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={GOOGLE_MAPS_API_KEY}"
-        
-        # response = requests.get(url)
-        # data = response.json()
-        
-        # if data["status"] == "OK":
-        #     location = data["results"][0]["geometry"]["location"]
-        #     return location["lat"], location["lng"]
-        # return None, None
 
     def __str__(self):
         # if self.user:

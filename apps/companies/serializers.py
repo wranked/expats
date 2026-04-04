@@ -85,7 +85,6 @@ class RelatedCompanySerializer(serializers.ModelSerializer):
 
 class CompanySerializer(serializers.ModelSerializer):
     avatar_url = serializers.SerializerMethodField()
-    primary_location = serializers.SerializerMethodField()
     branches = BranchSerializer(many=True, required=False)
     related_companies = RelatedCompanySerializer(many=True, read_only=True)
     
@@ -124,10 +123,6 @@ class CompanySerializer(serializers.ModelSerializer):
         if obj.avatar:
             return cloudinary.utils.cloudinary_url(obj.avatar.url)[0]
         return None
-
-    def get_primary_location(self, obj):
-        branch = obj.branches.filter(is_primary=True).first()
-        return str(branch.location) if branch else None
 
 
 class CreateCompanySerializer(serializers.ModelSerializer):

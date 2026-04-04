@@ -279,3 +279,62 @@ def test_company_admin_can_update_related_companies(api_client, dummy_user):
     related_company.refresh_from_db()
     assert related_company in main_company.related_companies.all()
     assert main_company in related_company.related_companies.all()
+
+
+@pytest.mark.django_db
+def test_company_primary_location_is_persisted_from_primary_branch():
+    company = Company.objects.create(
+        display_name="Persisted Primary Co",
+        id_name="persisted-primary-co",
+        category=CategoryTypes.OTHER,
+    )
+    country, _ = Country.objects.get_or_create(
+        country_code="PT",
+        defaults={
+            "name": "Portugal",
+            "region": RegionTypes.EUROPE,
+            "subregion": SubRegionTypes.SOUTHERN_EUROPE,
+            "business_region": BusinessRegionTypes.EMEA,
+        },
+    )
+    lisbon, _ = Location.objects.get_or_create(name="Lisbon", country=country)
+
+    Branch.objects.create(
+        company=company,
+        location=lisbon,
+        name="HQ",
+        is_primary=True,
+    )
+
+    company.refresh_from_db()
+    assert company.primary_location == str(lisbon)
+
+
+@pytest.mark.django_db
+def test_company_primary_location_clears_when_primary_branch_deleted():
+    company = Company.objects.create(
+        display_name="Delete Primary Co",
+        id_name="delete-primary-co",
+        category=CategoryTypes.OTHER,
+    )
+    country, _ = Country.objects.get_or_create(
+        country_code="IT",
+        defaults={
+            "name": "Italy",
+            "region": RegionTypes.EUROPE,
+            "subregion": SubRegionTypes.SOUTHERN_EUROPE,
+            "business_region": BusinessRegionTypes.EMEA,
+        },
+    )
+    rome, _ = Location.objects.get_or_create(name="Rome", country=country)
+
+    branch = Branch.objects.create(
+        company=company,
+        location=rome,
+        name="HQ",
+        is_primary=True,
+    )
+    branch.delete()
+
+    company.refresh_from_db()
+    assert company.primary_location is None

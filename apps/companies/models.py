@@ -37,6 +37,7 @@ class Company(BaseModel):
     last_blacklisted_at = models.DateTimeField(null=True, blank=True)
     is_certified = models.BooleanField(default=False)
     approved_at = models.DateTimeField(null=True, blank=True)
+    primary_location = models.CharField(max_length=255, null=True, blank=True, editable=False)
     raw_address = models.CharField(max_length=255, null=True, blank=True)
     country = models.ForeignKey("locations.Country", on_delete=models.SET_NULL, null=True, blank=True, related_name="companies")
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="created_companies")
@@ -92,12 +93,33 @@ class Branch(models.Model):
     # class Meta:
     #     unique_together = ("company", "location")  
 
+    def _sync_company_primary_location(self):
+        primary_branch = Branch.objects.filter(
+            company_id=self.company_id,
+            is_primary=True,
+        ).select_related("location").first()
+        Company.objects.filter(id=self.company_id).update(
+            primary_location=str(primary_branch.location) if primary_branch else None,
+        )
+
     def save(self, *args, **kwargs):
         """ Ensure just one primary location by company."""
         if self.is_primary:
             if Branch.objects.filter(company=self.company, is_primary=True).exclude(id=self.id).exists():
                 raise ValidationError("This company already has a primary location.")
         super().save(*args, **kwargs)
+        self._sync_company_primary_location()
+
+    def delete(self, *args, **kwargs):
+        company_id = self.company_id
+        super().delete(*args, **kwargs)
+        primary_branch = Branch.objects.filter(
+            company_id=company_id,
+            is_primary=True,
+        ).select_related("location").first()
+        Company.objects.filter(id=company_id).update(
+            primary_location=str(primary_branch.location) if primary_branch else None,
+        )
 
     class Meta:
         verbose_name_plural = "Branches"
