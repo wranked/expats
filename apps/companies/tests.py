@@ -9,7 +9,7 @@ from .utils import clean_display_name
 from apps.reviews.models import Review
 from apps.users.models import CustomUser
 from apps.locations.constants import BusinessRegionTypes, RegionTypes, SubRegionTypes
-from apps.locations.models import Country, Location
+from apps.locations.models import Address, Country, Location
 from django.core.exceptions import ValidationError
 
 
@@ -117,21 +117,39 @@ def test_branch_primary_constraint():
         id_name="primary-co",
         category=CategoryTypes.OTHER,
     )
-    country = Country.objects.create(
-        name="Spain",
+    country, _ = Country.objects.get_or_create(
         country_code="ES",
-        region=RegionTypes.EUROPE,
-        subregion=SubRegionTypes.SOUTHERN_EUROPE,
-        business_region=BusinessRegionTypes.EMEA,
+        defaults={
+            "name": "Spain",
+            "region": RegionTypes.EUROPE,
+            "subregion": SubRegionTypes.SOUTHERN_EUROPE,
+            "business_region": BusinessRegionTypes.EMEA,
+        },
     )
-    location = Location.objects.create(
+    location, _ = Location.objects.get_or_create(
         name="Madrid",
         country=country,
+    )
+    primary_address = Address.objects.create(
+        street="Gran Via",
+        number="1",
+        postal_code="28013",
+        location=location,
+        latitude=40.4168,
+        longitude=-3.7038,
+    )
+    secondary_address = Address.objects.create(
+        street="Alcala",
+        number="2",
+        postal_code="28014",
+        location=location,
+        latitude=40.4170,
+        longitude=-3.7030,
     )
 
     Branch.objects.create(
         company=company,
-        location=location,
+        address=primary_address,
         name="HQ",
         is_primary=True,
     )
@@ -139,10 +157,61 @@ def test_branch_primary_constraint():
     with pytest.raises(ValidationError):
         Branch.objects.create(
             company=company,
-            location=location,
+            address=secondary_address,
             name="Secondary",
             is_primary=True,
         )
+
+
+@pytest.mark.django_db
+def test_branch_requires_address():
+    company = Company.objects.create(
+        display_name="Constraint Co",
+        id_name="constraint-co",
+        category=CategoryTypes.OTHER,
+    )
+
+    with pytest.raises(ValidationError, match="address"):
+        Branch.objects.create(
+            company=company,
+            name="Missing place",
+        )
+
+
+@pytest.mark.django_db
+def test_branch_allows_address():
+    company = Company.objects.create(
+        display_name="Address Only Co",
+        id_name="address-only-co",
+        category=CategoryTypes.OTHER,
+    )
+    country, _ = Country.objects.get_or_create(
+        country_code="DE",
+        defaults={
+            "name": "Germany",
+            "region": RegionTypes.EUROPE,
+            "subregion": SubRegionTypes.WESTERN_EUROPE,
+            "business_region": BusinessRegionTypes.EMEA,
+        },
+    )
+    berlin, _ = Location.objects.get_or_create(name="Berlin", country=country)
+    address = Address.objects.create(
+        street="Unter den Linden",
+        number="10",
+        postal_code="10117",
+        location=berlin,
+        latitude=52.5200,
+        longitude=13.4050,
+    )
+
+    branch = Branch.objects.create(
+        company=company,
+        address=address,
+        name="Address only",
+    )
+
+    assert branch.address == address
+    assert branch.resolved_location == berlin
 
 
 def test_clean_display_name_with_doo():
@@ -299,9 +368,18 @@ def test_company_primary_location_is_persisted_from_primary_branch():
     )
     lisbon, _ = Location.objects.get_or_create(name="Lisbon", country=country)
 
+    address = Address.objects.create(
+        street="Avenida da Liberdade",
+        number="100",
+        postal_code="1250-146",
+        location=lisbon,
+        latitude=38.7223,
+        longitude=-9.1393,
+    )
+
     Branch.objects.create(
         company=company,
-        location=lisbon,
+        address=address,
         name="HQ",
         is_primary=True,
     )
@@ -328,9 +406,18 @@ def test_company_primary_location_clears_when_primary_branch_deleted():
     )
     rome, _ = Location.objects.get_or_create(name="Rome", country=country)
 
+    address = Address.objects.create(
+        street="Via del Corso",
+        number="1",
+        postal_code="00186",
+        location=rome,
+        latitude=41.9028,
+        longitude=12.4964,
+    )
+
     branch = Branch.objects.create(
         company=company,
-        location=rome,
+        address=address,
         name="HQ",
         is_primary=True,
     )

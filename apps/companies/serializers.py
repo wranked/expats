@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from .models import Company, CompanyAdmin, Branch
-from apps.locations.models import Address, Location
 
 User = get_user_model()
 
@@ -53,7 +52,7 @@ User = get_user_model()
 
 class BranchSerializer(serializers.ModelSerializer):
     address = serializers.CharField(source="address.__str__", read_only=True)
-    location = serializers.CharField(source="location.__str__", read_only=True)
+    location = serializers.CharField(source="address.location.__str__", read_only=True)
 
     class Meta:
         model = Branch

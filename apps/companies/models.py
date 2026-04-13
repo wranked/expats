@@ -86,27 +86,35 @@ class Company(BaseModel):
 class Branch(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="branches")
-    location = models.ForeignKey("locations.Location", on_delete=models.CASCADE, related_name="branches")
-    address = models.OneToOneField("locations.Address", on_delete=models.CASCADE, null=True, blank=True)
+    address = models.OneToOneField("locations.Address", on_delete=models.CASCADE)
     is_primary = models.BooleanField(default=False)
 
-    # class Meta:
-    #     unique_together = ("company", "location")  
+    @property
+    def resolved_location(self):
+        return self.address.location if self.address_id else None
+
+    def clean(self):
+        super().clean()
+
+        if not self.address_id:
+            raise ValidationError({"address": "Branch must have an address."})
+
+        if self.is_primary and self.company_id:
+            if Branch.objects.filter(company_id=self.company_id, is_primary=True).exclude(id=self.id).exists():
+                raise ValidationError("This company already has a primary location.")
 
     def _sync_company_primary_location(self):
         primary_branch = Branch.objects.filter(
             company_id=self.company_id,
             is_primary=True,
-        ).select_related("location").first()
+        ).select_related("address__location").first()
+        primary_location = primary_branch.resolved_location if primary_branch else None
         Company.objects.filter(id=self.company_id).update(
-            primary_location=str(primary_branch.location) if primary_branch else None,
+            primary_location=str(primary_location) if primary_location else None,
         )
 
     def save(self, *args, **kwargs):
-        """ Ensure just one primary location by company."""
-        if self.is_primary:
-            if Branch.objects.filter(company=self.company, is_primary=True).exclude(id=self.id).exists():
-                raise ValidationError("This company already has a primary location.")
+        self.full_clean()
         super().save(*args, **kwargs)
         self._sync_company_primary_location()
 
@@ -116,9 +124,10 @@ class Branch(models.Model):
         primary_branch = Branch.objects.filter(
             company_id=company_id,
             is_primary=True,
-        ).select_related("location").first()
+        ).select_related("address__location").first()
+        primary_location = primary_branch.resolved_location if primary_branch else None
         Company.objects.filter(id=company_id).update(
-            primary_location=str(primary_branch.location) if primary_branch else None,
+            primary_location=str(primary_location) if primary_location else None,
         )
 
     class Meta:
